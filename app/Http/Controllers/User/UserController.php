@@ -12,7 +12,7 @@ class UserController extends Controller
     //
 
 	public  function test(){
-		$url='http://myorder1.com';
+		$url='http://xuesong.52self.cn';
 		$client=new Client([
 				'base_uri'=>$url,
 				'timeout'=>2.0,
