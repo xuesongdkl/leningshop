@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use GuzzleHttp\Client;
 use App\Model\UserModel;
 
 class UserController extends Controller
@@ -12,13 +12,13 @@ class UserController extends Controller
     //
 
 	public  function test(){
-		$url='http://myorder.com';
+		$url='http://myorder1.com';
 		$client=new Client([
 				'base_uri'=>$url,
 				'timeout'=>2.0,
 		]);
 
-		$response=$client->request('GET','.order.php');
+		$response=$client->request('GET','order.php');
 		echo $response->getBody();
 
 	}
@@ -27,10 +27,6 @@ class UserController extends Controller
 		echo $uid;
 	}
 
-	public function test0()
-    {
-        echo '<pre>';print_r($_GET);echo '</pre>';
-    }
 
 	public function add()
 	{
