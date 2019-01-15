@@ -75,7 +75,7 @@ Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('
 //购物车
 Route::get('/cart','Cart\IndexController@index')->middleware('check.login.token');
 Route::get('/cart/add/{goods_id}','Cart\IndexController@add')->middleware('check.login.token');
-Route::post('/cart/add2','Cart\IndexController@add2')->middleware('check.login.token');//添加
+Route::post('/cart/add2','Cart\IndexController@add2');//添加
 Route::get('/cart/del/{goods_id}','Cart\IndexController@del')->middleware('check.login.token');
 //删除商品
 Route::post('/cart/del2','Cart\IndexController@del2')->middleware('check.login.token');
@@ -97,8 +97,9 @@ Route::get('/test','User\UserController@test');
 
 
 Route::get('/pay/alipay/test','Pay\AlipayController@test');         //测试
-Route::get('/pay/o/{order_id}','Pay\IndexController@pay')->middleware('check.login.token');  //订单支付
-Route::post('/pay/alipay/notify','Pay\AlipayController@notify');        //支付宝支付 通知回调
+Route::get('/pay/o/{order_id}','Pay\AlipayController@pay')->middleware('check.login.token');  //订单支付
+Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');        //支付宝支付 异步通知回调
+Route::post('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支付宝支付 同步通知回调
 
 
 

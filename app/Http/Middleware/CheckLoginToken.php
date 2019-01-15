@@ -16,8 +16,8 @@ class CheckLoginToken
     public function handle($request, Closure $next)
     {
         if(!$request->session()->get('p_token')){
-            header('Refresh:2;url=/userlogin');
             echo '请先登录';
+            header('Refresh:2;url=/userlogin');
             exit;
         }
         return $next($request);
