@@ -228,7 +228,7 @@ class AlipayController extends Controller
     {
 
 
-//        header('Refresh:2;url=/order/list');
+        header('Refresh:2;url=/order/list');
         echo "订单： ".$_GET['out_trade_no'] . ' 支付成功，正在跳转';
 
         echo '<pre>';print_r($_GET);echo '</pre>';die;
