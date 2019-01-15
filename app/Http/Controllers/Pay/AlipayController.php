@@ -1,47 +1,62 @@
 <?php
 
 namespace App\Http\Controllers\Pay;
+
 use App\Model\OrderModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use GuzzleHttp\Client;
 
 class AlipayController extends Controller
 {
+    //
+
+
     public $app_id;
     public $gate_way;
     public $notify_url;
     public $return_url;
-    public $rsaPrivateKeyFilePath = './key/priv.key';//应用私钥
-    public $aliPubKey='./key/ali_pub.key';//支付宝公钥
+    public $rsaPrivateKeyFilePath = './key/priv.key';
+    public $aliPubKey = './key/ali_pub.key';
+
 
     public function __construct()
     {
-        $this->app_id=env('ALIPAY_APPID');
-        $this->gate_way=env('ALIPAY_GATEWAY');
-        $this->notify_url=env('ALIPAY_NOTIFYURL');
+        $this->app_id = env('ALIPAY_APPID');
+        $this->gate_way = env('ALIPAY_GATEWAY');
+        $this->notify_url = env('ALIPAY_NOTIFYURL');
         $this->return_url = env('ALIPAY_RETURN_URL');
     }
+
 
     /**
      * 请求订单服务 处理订单逻辑
      *
      */
-    public  function test0(){
-        $url='http://xuesongdkl.52myself.cn';
-        $client=new Client([
-            'base_uri'=>$url,
-            'timeout'=>2.0,
+    public function test0()
+    {
+        //
+        $url = 'http://vm.order.lening.com';
+        // $client = new Client();
+        $client = new Client([
+            'base_uri' => $url,
+            'timeout'  => 2.0,
         ]);
 
-        $response=$client->request('GET','order.php');
+        $response = $client->request('GET', '/order.php');
         echo $response->getBody();
+
+
     }
 
-    public function test(){
+
+    public function test()
+    {
+
         $bizcont = [
             'subject'           => 'ancsd'. mt_rand(1111,9999).str_random(6),
-            'out_trade_no'      => 'oid'.date('YmdHis').mt_rand(1111,2222),
+            'out_trade_no'      => 'order_id'.date('YmdHis').mt_rand(1111,2222),
             'total_amount'      => 0.01,
             'product_code'      => 'QUICK_WAP_WAY',
 
@@ -55,8 +70,8 @@ class AlipayController extends Controller
             'sign_type'   => 'RSA2',
             'timestamp'   => date('Y-m-d H:i:s'),
             'version'   => '1.0',
-            'return_url'=>$this->return_url,
-            'notify_url'   => $this->notify_url,
+            'notify_url'   => $this->notify_url,        //异步通知地址
+            'return_url'   => $this->return_url,        // 同步通知地址
             'biz_content'   => json_encode($bizcont),
         ];
 
@@ -66,6 +81,7 @@ class AlipayController extends Controller
         foreach($data as $k=>$v){
             $param_str .= $k.'='.urlencode($v) . '&';
         }
+
         $url = rtrim($param_str,'&');
         $url = $this->gate_way . $url;
         header("Location:".$url);
@@ -73,30 +89,33 @@ class AlipayController extends Controller
 
 
     /**
-    *订单支付
+     * 订单支付
+     * @param $order_id
      */
-    public function pay($order_id){
-        //验证订单状态
-        $order_info=OrderModel::where(['order_id'=>$order_id])->first();
+    public function pay($order_id)
+    {
+
+        //验证订单状态 是否已支付 是否是有效订单
+        $order_info = OrderModel::where(['order_id'=>$order_id])->first()->toArray();
 
         //判断订单是否已被支付
         if($order_info['is_pay']==1){
-            die('订单已被支付');
+            die("订单已支付，请勿重复支付");
         }
         //判断订单是否已被删除
-        if($order_info['id_delete']==1){
-            die('订单已被删除，不能继续支付');
+        if($order_info['is_delete']==1){
+            die("订单已被删除，无法支付");
         }
-
 
 
 
         //业务参数
-        $bizcont=[
-            'subject'=>'Lening-order'.$order_id,
-            'out_trade_no'=>$order_id,
-            'total_amout'=>$order_info['order_amount']/100,
-            'product_code'=>'QUICK_WAP_WAY',
+        $bizcont = [
+            'subject'           => 'Lening-Order: ' .$order_id,
+            'out_trade_no'      => $order_id,
+            'total_amount'      => $order_info['order_amount'] / 100,
+            'product_code'      => 'QUICK_WAP_WAY',
+
         ];
 
         //公共参数
@@ -108,8 +127,8 @@ class AlipayController extends Controller
             'sign_type'   => 'RSA2',
             'timestamp'   => date('Y-m-d H:i:s'),
             'version'   => '1.0',
-            'return_url'=>$this->return_url,
-            'notify_url'   => $this->notify_url,
+            'notify_url'   => $this->notify_url,        //异步通知地址
+            'return_url'   => $this->return_url,        // 同步通知地址
             'biz_content'   => json_encode($bizcont),
         ];
 
@@ -120,10 +139,12 @@ class AlipayController extends Controller
         foreach($data as $k=>$v){
             $param_str .= $k.'='.urlencode($v) . '&';
         }
+
         $url = rtrim($param_str,'&');
         $url = $this->gate_way . $url;
         header("Location:".$url);
     }
+
 
 
     public function rsaSign($params) {
@@ -145,6 +166,7 @@ class AlipayController extends Controller
         $sign = base64_encode($sign);
         return $sign;
     }
+
 
     public function getSignContent($params) {
         ksort($params);
@@ -199,22 +221,40 @@ class AlipayController extends Controller
         return $data;
     }
 
-
     /**
-    *支付宝同步通知回调
+     * 支付宝同步通知回调
      */
-    public function aliReturn(){
-        echo "<pre>";print_r($_GET);echo "</pre>";
-        header('Refresh:2;url=/order/list');
+    public function aliReturn()
+    {
+
+
+//        header('Refresh:2;url=/order/list');
         echo "订单： ".$_GET['out_trade_no'] . ' 支付成功，正在跳转';
+
+        echo '<pre>';print_r($_GET);echo '</pre>';die;
+//        //验签 支付宝的公钥
+//        if(!$this->verify($_GET)){
+//            die('簽名失敗');
+//        }
+//
+//        //验证交易状态
+////        if($_GET['']){
+////
+////        }
+////
+//
+//        //处理订单逻辑
+//        $this->dealOrder($_GET);
     }
 
-    /*
+    /**
      * 支付宝异步通知
-     * */
-    public function aliNotify(){
-        $data=json_encode($_POST);
-        $log_str='>>>>'.date('Y-m-d H:i:s').$data.'<<<<\n\n';
+     */
+    public function aliNotify()
+    {
+
+        $data = json_encode($_POST);
+        $log_str = '>>>> '.date('Y-m-d H:i:s') . $data . "<<<<\n\n";
         //记录日志
         file_put_contents('logs/alipay.log',$log_str,FILE_APPEND);
         //验签
@@ -238,8 +278,8 @@ class AlipayController extends Controller
                 'is_pay'        => 1,       //支付状态  0未支付 1已支付
                 'pay_amount'    => $_POST['total_amount'] * 100,    //支付金额
                 'pay_time'      => strtotime($_POST['gmt_payment']), //支付时间
-                'plat_oid'      => $_POST['trade_no'],      //支付宝订单号
-                'plat'          => 1,      //平台编号 1支付宝 2微信
+                'plat_order_id'      => $_POST['trade_no'],      //支付宝订单号
+                'plat'          => 1,      //平台编号 1支付宝 2微信 
             ];
 
             OrderModel::where(['order_id'=>$order_id])->update($info);
@@ -250,6 +290,7 @@ class AlipayController extends Controller
 
         echo 'success';
     }
+
 
     //验签
     function verify($params) {

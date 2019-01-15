@@ -91,7 +91,7 @@ Route::get('/order/add','Order\IndexController@add');  //下单
 Route::get('/order/list','Order\IndexController@list');  //列表展示
 
 //支付订单
-Route::get('/pay/{order_id}','Pay\IndexController@pay');
+//Route::get('/pay/{order_id}','Pay\IndexController@pay');
 
 Route::get('/test','User\UserController@test');
 
@@ -99,7 +99,7 @@ Route::get('/test','User\UserController@test');
 Route::get('/pay/alipay/test','Pay\AlipayController@test');         //测试
 Route::get('/pay/o/{order_id}','Pay\AlipayController@pay')->middleware('check.login.token');  //订单支付
 Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');        //支付宝支付 异步通知回调
-Route::post('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支付宝支付 同步通知回调
+Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支付宝支付 同步通知回调
 
 
 
