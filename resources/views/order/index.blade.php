@@ -19,10 +19,12 @@
                 <td>{{$v['order_amount']}}</td>
                 <td>{{date('Y-m-d H:i:s',$v['add_time'])}}</td>
                 <td>
-                    @if($v['is_pay']==0)
+                    @if($v['is_pay']==0&&$v['is_delete']==0)
                         <a href="/pay/o/{{$v['order_id']}}">去支付</a>
                     @elseif($v['is_pay']==1)
                         <a href="">已支付</a>
+                    @elseif($v['is_delete']==1)
+                        <a href="">已删除</a>
                     @endif
                 </td>
             </tr>
