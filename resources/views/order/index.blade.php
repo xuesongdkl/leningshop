@@ -19,11 +19,11 @@
                 <td>{{$v['order_amount']}}</td>
                 <td>{{date('Y-m-d H:i:s',$v['add_time'])}}</td>
                 <td>
-                    <?php if($v['is_pay']==0){?>
+                    @if($v['is_pay']==0)
                         <a href="/pay/o/{{$v['order_id']}}">去支付</a>
-                    <?php }else{?>
+                    @elseif($v['is_pay']==1)
                         <a href="">已支付</a>
-                    <?php }?>
+                    @endif
                 </td>
             </tr>
         @endforeach
