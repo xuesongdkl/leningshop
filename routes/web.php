@@ -107,4 +107,6 @@ Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');        //æ”¯ä
 
 
 
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
