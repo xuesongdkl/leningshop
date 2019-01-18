@@ -43,13 +43,8 @@
                             <li><a href="#">One more separated link</a></li>
                         </ul>
                     </li>
-                    <?php if(empty($_COOKIE['uid'])){ ?>
-                    <li><a href="/userlogin">登录</a></li>
                     <li><a href="/userreg">注册</a></li>
-                    <?php }else{ ?>
-                    <li><a href="javascript:;"><?php echo 'UID:'.$_COOKIE['uid'].'欢迎回来'?></a></li>
                     <li><a href="/quit">退出</a></li>
-                    <?php } ?>
                 </ul>
             </div>
         </div>
