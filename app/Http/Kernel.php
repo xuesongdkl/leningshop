@@ -35,6 +35,11 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+        ],
+
+        'log.click' =>[
+            ClickLog::class
         ],
 
         'api' => [
@@ -59,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'check.cookie'=>\App\Http\Middleware\CheckCookie::class,
         'check.login.token' => \App\Http\Middleware\CheckLoginToken::class,
+
     ];
 }

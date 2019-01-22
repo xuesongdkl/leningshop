@@ -33,6 +33,21 @@ Route::get('/month/{m}/date/{d}','Test\TestController@md');
 Route::get('/name/{str?}','Test\TestController@showName');
 
 
+Route::get('/test4',function(){
+    echo "111";
+});
+Route::middleware(['log.click'])->group(function(){
+    Route::any('/test/abc','Test\TestController@abc');
+    Route::get('/test/3',function(){
+        echo "111";
+    });
+    Route::get('/test/cookie1','Test\TestController@cookieTest1');
+    Route::get('/test/cookie2','Test\TestController@cookieTest2');
+    Route::get('/test/session','Test\TestController@sessionTest');
+    Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
+});
+
+
 
 // View视图路由
 Route::view('/mvc','mvc');
@@ -43,13 +58,11 @@ Route::view('/error','error',['code'=>500]);
 Route::get('/query/get','Test\TestController@query1');
 Route::get('/query/where','Test\TestController@query2');
 
-
-//Route::match(['get','post'],'/test/abc','Test\TestController@abc');
-Route::any('/test/abc','Test\TestController@abc');
-
 //练习
-Route::get('/test1','Test\TestController@viewTest1');
-Route::get('/test2','Test\TestController@viewTest2');
+//Route::match(['get','post'],'/test/abc','Test\TestController@abc');
+//Route::any('/test/abc','Test\TestController@abc');
+//Route::get('/test1','Test\TestController@viewTest1');
+//Route::get('/test2','Test\TestController@viewTest2');
 
 //用户注册
 Route::get('/userreg','User\UserController@reg');
@@ -67,10 +80,10 @@ Route::get('/mvc/test1','Mvc\MvcController@test1');
 Route::get('/mvc/bst','Mvc\MvcController@bst');
 
 //Cookie
-Route::get('/test/cookie1','Test\TestController@cookieTest1');
-Route::get('/test/cookie2','Test\TestController@cookieTest2');
-Route::get('/test/session','Test\TestController@sessionTest');
-Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
+//Route::get('/test/cookie1','Test\TestController@cookieTest1');
+//Route::get('/test/cookie2','Test\TestController@cookieTest2');
+//Route::get('/test/session','Test\TestController@sessionTest');
+//Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
 
 //购物车
 Route::get('/cart','Cart\IndexController@index')->middleware('check.login.token');
@@ -85,6 +98,9 @@ Route::post('/cart/del2','Cart\IndexController@del2')->middleware('check.login.t
 Route::get('/goods/list','Goods\IndexController@list');
 //商品详情
 Route::get('/goods/{goods_id}','Goods\IndexController@index');
+//文件上传
+Route::get('/upload','Goods\IndexController@uploadIndex');
+Route::post('/upload/pdf','Goods\IndexController@uploadPdf');
 
 //订单
 Route::get('/order/add','Order\IndexController@add');  //下单

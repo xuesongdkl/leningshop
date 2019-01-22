@@ -34,10 +34,29 @@ class IndexController extends Controller
     }
     //列表展示
     public function list(){
-        $list=GoodsModel::all()->toArray();
+        $list=GoodsModel::paginate(2);
         $data=[
             'list'=>$list
         ];
         return view('goods.list',$data);
     }
+
+    //文件上传的view
+    public function uploadIndex(){
+        return view('goods.upload');
+    }
+
+    //文件上传
+    public function uploadPdf(Request $request){
+        $pdf=$request->file('file');
+        $rf=$pdf->extension();
+        if($rf!='pdf'){
+            die('格式不符合PDF格式');
+        }
+        $res=$pdf->storeAs(date('Ymd'),str_random(4).'.pdf');
+        if($res){
+            echo "上传成功";
+        }
+    }
+
 }
