@@ -6,7 +6,7 @@
         {{csrf_field()}}
         用户名：<input type="text" name="name">
         密码：<input type="password" name="password">
-        <a href="/user/changePwd">忘记密码？</a>
+        <a href="/userchangePwd">忘记密码？</a>
         <input type="submit" value="登  录">
     </form>
 @endsection
