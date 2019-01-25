@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Model\GoodsModel;
+use Illuminate\Support\Facades\Redis;
 
 class IndexController extends Controller
 {
@@ -18,8 +19,23 @@ class IndexController extends Controller
      */
     public function index($goods_id)
     {
-        $goods = GoodsModel::where(['goods_id'=>$goods_id])->first();
+        $redis_goods_key="h_goods_info_".$goods_id;
+        echo $redis_goods_key;
+        $goods_info=Redis::hGetAll($redis_goods_key);
+        if($goods_info){
+            echo "Redis";
+            echo "<pre>";print_r($goods_info);echo "</pre>";
+        }else{
+            echo "Mysql";
+            $goods = GoodsModel::where(['goods_id'=>$goods_id])->first()->toArray();
+            echo "<pre>";print_r($goods);echo "</pre>";
+            //写入缓存
+            $rs=Redis::hmset($redis_goods_key,$goods);
+            //设置缓存过期时间
+            Redis::expire($redis_goods_key,10);
+        }
 
+        die;
         //商品不存在
         if(empty($goods)){
             header('Refresh:2;url=/');
@@ -32,6 +48,20 @@ class IndexController extends Controller
         ];
         return view('goods.index',$data);
     }
+
+    //更新商品信息
+    public function updateGoodsInfo($goods_id){
+        $name=str_random(6);
+        $info=[
+            'goods_name'=>$name,
+            'add_time'=>time(),
+            'price'=>rand(111,999)
+        ];
+        $goodsinfo=GoodsModel::where(['goods_id'=>$goods_id])->update($info);
+
+    }
+
+
     //列表展示
     public function list(){
         $list=GoodsModel::paginate(2);

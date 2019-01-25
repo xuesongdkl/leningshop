@@ -45,6 +45,8 @@ Route::middleware(['log.click'])->group(function(){
     Route::get('/test/cookie2','Test\TestController@cookieTest2');
     Route::get('/test/session','Test\TestController@sessionTest');
     Route::get('/test/check_cookie','Test\TestController@checkCookie')->middleware('check.cookie');
+
+    Route::get('/test/update/goods/{goods_id}','Goods\IndexController@updateGoodsInfo');
 });
 
 
@@ -69,8 +71,8 @@ Route::get('/userreg','User\UserController@reg');
 Route::post('/userreg','User\UserController@doreg');
 
 //用户登录
-//Route::get('/userlogin','User\UserController@login');
-//Route::post('/userlogin','User\UserController@dologin');
+Route::get('/userlogin','User\UserController@login');
+Route::post('/userlogin','User\UserController@dologin');
 Route::get('/center','User\UserController@center');//个人中心
 //退出
 Route::get('/quit','User\UserController@quit');
@@ -128,10 +130,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-//用户登录
-Route::get('/userlogin','User\IndexController@index');
-Route::post('/userlogin','User\IndexController@login');
-//忘记密码
-Route::get('/userchangePwd','User\IndexController@fore');
-Route::post('/userchangePwd','User\IndexController@changePwd');
+////用户登录
+//Route::get('/userlogin','User\IndexController@index');
+//Route::post('/userlogin','User\IndexController@login');
+////忘记密码
+//Route::get('/userchangePwd','User\IndexController@fore');
+//Route::post('/userchangePwd','User\IndexController@changePwd');
+
+
+//在线订座
+Route::get('/movie','Movie\IndexController@index');
 
