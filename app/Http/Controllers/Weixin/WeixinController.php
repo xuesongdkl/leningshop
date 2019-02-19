@@ -153,15 +153,57 @@ class WeixinController extends Controller
         $data=[
             'button'=>[
                 [
-                    'type'=>"view",
-                    'name'=>"Lening22",
-                    'url'=>"https://www.baidu.com"
+                    'name'=>'我',
+                    'sub_button'=>[
+                        [
+                            'type'=>"view",
+                            'name'=>"善良",
+                            'url'=>"https://www.baidu.com"
+                        ],
+                        [
+                            'type'=>"view",
+                            'name'=>"微笑",
+                            'url'=>"https://www.baidu.com"
+                        ],
+                    ]
+                ],
+                [
+                    'name'=>'爱',
+                    'sub_button'=>[
+                        [
+                            'type'=>"view",
+                            'name'=>"喜",
+                            'url'=>"https://www.baidu.com"
+                        ],
+                        [
+                            'type'=>"view",
+                            'name'=>"欢",
+                            'url'=>"https://www.baidu.com"
+                        ],
+                    ]
+                ],
+                [
+                    'name'=>'你',
+                    'sub_button'=>
+                    [
+                        [
+                            'type'=>"view",
+                            'name'=>"额",
+                            'url'=>"https://www.baidu.com"
+                        ],
+                        [
+                            'type'=>"view",
+                            'name'=>"嗯",
+                            'url'=>"https://www.baidu.com"
+                        ],
+                    ]
+
                 ]
             ]
         ];
 //        print_r($data);die;
         $r=$client->request('POST',$url,[
-            'body'=>json_encode($data)
+            'body'=>json_encode($data,JSON_UNESCAPED_UNICODE)
         ]);
 
 //        var_dump($r);
