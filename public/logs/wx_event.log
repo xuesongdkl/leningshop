@@ -496,4 +496,26 @@
 <MsgId>22199850211844559</MsgId>
 </xml>
 
+<<<<<<<2019-02-20 18:37:33
+<xml><ToUserName><![CDATA[gh_0beb0bfdac8a]]></ToUserName>
+<FromUserName><![CDATA[oNiPq5qguCnYBLX4aTasWJzcY6Q0]]></FromUserName>
+<CreateTime>1550632979</CreateTime>
+<MsgType><![CDATA[voice]]></MsgType>
+<MediaId><![CDATA[j0kA1CmGcGEUKgx1NsaCNAqUxwiiO1a9kSwYELrdy2829KpRg0FOkev4J2daRsIg]]></MediaId>
+<Format><![CDATA[amr]]></Format>
+<MsgId>22199724682931738</MsgId>
+<Recognition><![CDATA[]]></Recognition>
+</xml>
+
+<<<<<<<2019-02-20 18:40:22
+<xml><ToUserName><![CDATA[gh_0beb0bfdac8a]]></ToUserName>
+<FromUserName><![CDATA[oNiPq5qguCnYBLX4aTasWJzcY6Q0]]></FromUserName>
+<CreateTime>1550632979</CreateTime>
+<MsgType><![CDATA[voice]]></MsgType>
+<MediaId><![CDATA[j0kA1CmGcGEUKgx1NsaCNAqUxwiiO1a9kSwYELrdy2829KpRg0FOkev4J2daRsIg]]></MediaId>
+<Format><![CDATA[amr]]></Format>
+<MsgId>22199724682931738</MsgId>
+<Recognition><![CDATA[]]></Recognition>
+</xml>
+
 <<<<<<<
