@@ -241,7 +241,7 @@ class WeixinController extends Controller
             ],
             "msgtype"=> "text",
             "text"=>[
-                "content"=> "hello from boxer."
+                "content"=> "都凯龙是二傻子"
             ]
 //],
 //            "filter"=>[
@@ -319,6 +319,13 @@ class WeixinController extends Controller
         $data = json_decode(file_get_contents($url),true);
 //        echo '<pre>';print_r($data);echo '</pre>';
         return $data;
+    }
+
+    /*
+     * 更新access_token**/
+    public function refreshToken(){
+        Redis::del($this->redis_weixin_access_token);
+        echo $this->getWXAccessToken();
     }
 
 
