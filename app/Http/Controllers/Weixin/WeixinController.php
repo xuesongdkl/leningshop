@@ -172,6 +172,7 @@ class WeixinController extends Controller
             //echo 'NO';
         }
 
+        return $file_name;
     }
 
     /**
