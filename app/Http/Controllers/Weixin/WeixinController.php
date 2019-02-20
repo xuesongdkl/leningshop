@@ -53,13 +53,15 @@ class WeixinController extends Controller
                 $msg = $xml->Content;
                 $xml_response='<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content></xml>';
                 echo $xml_response;
-            }elseif($xml->MsgType=='image'){    //用户发送图片消息
+            }elseif($xml->MsgType=='image') {    //用户发送图片消息
                 //视业务需求是否需要下载保存图片
-                if(1){  //下载图片素材
+                if (1) {  //下载图片素材
                     $this->dlWxImg($xml->MediaId);
-                    $xml_response='<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. date('Y-m-d H:i:s') .']]></Content></xml>';
+                    $xml_response = '<xml><ToUserName><![CDATA[' . $openid . ']]></ToUserName><FromUserName><![CDATA[' . $xml->ToUserName . ']]></FromUserName><CreateTime>' . time() . '</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[' . date('Y-m-d H:i:s') . ']]></Content></xml>';
                     echo $xml_response;
                 }
+            }elseif($xml->MsgType=='vioce'){
+                $this->dlVioce($xml->MediaId);
             }elseif($xml->MsgType=='event'){
 
                 if($event=='subscribe'){    //判断事件类型
@@ -147,8 +149,34 @@ class WeixinController extends Controller
 
     }
 
+    /**
+    *下载语音文件
+     * @param $media_id
+     */
+    public function dlVoice($media_id){
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken().'&media_id='.$media_id;
+        //echo $url;echo '</br>';
 
+        //保存图片
+        $client = new GuzzleHttp\Client();
+        $response = $client->get($url);
+        //$h = $response->getHeaders();
+        //echo '<pre>';print_r($h);echo '</pre>';die;
 
+        //获取文件名
+        $file_info = $response->getHeader('Content-disposition');
+
+        $file_name = substr(rtrim($file_info[0],'"'),-20);
+
+        $wx_image_path = 'wx/voice/'.$file_name;
+        //保存图片
+        $r = Storage::disk('local')->put($wx_image_path,$response->getBody());
+        if($r){     //保存成功
+//            echo 'OK';
+        }else{      //保存失败
+            //echo 'NO';
+        }
+    }
 
 
 
