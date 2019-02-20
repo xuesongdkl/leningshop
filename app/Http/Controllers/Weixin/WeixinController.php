@@ -226,6 +226,43 @@ class WeixinController extends Controller
     }
 
     /**
+    *群发消息
+     */
+    public function sendMsgs(){
+
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token=ACCESS_TOKE'.$this->getWXAccessToken();
+
+        //请求微信接口
+        $client = new GuzzleHttp\Client(['base_uri' => $url]);
+        $data=[
+            "filter"=>[
+                "is_to_all"=>true,
+                "tag_id"=>2
+            ],
+            "text"=>[
+                "content"=>"恭喜你，中奖了"
+            ],
+            "msgtype"=>"mpnews",
+        ];
+        $r=$client->request('POST',$url,[
+            'body'=>json_encode($data,JSON_UNESCAPED_UNICODE)
+        ]);
+        //解析微信接口 返回信息
+        $response_arr=json_decode($r->getBody(),true);
+
+      // echo '<pre>';print_r($response_arr);echo '</pre>';
+
+        if($response_arr['errcode']==0){
+            echo "群发成功";
+        }else{
+            echo "群发失败";echo "<br>";
+            echo $response_arr['errmsg'];
+        }
+
+    }
+
+
+    /**
      * 接收事件推送
      */
     public function validToken()
