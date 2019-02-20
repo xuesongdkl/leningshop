@@ -64,8 +64,10 @@ class WeixinController extends Controller
                     $xml_response = '<xml><ToUserName><![CDATA[' . $openid . ']]></ToUserName><FromUserName><![CDATA[' . $xml->ToUserName . ']]></FromUserName><CreateTime>' . time() . '</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[' . date('Y-m-d H:i:s') . ']]></Content></xml>';
                     echo $xml_response;
                 }
-            }elseif($xml->MsgType=='voice'){           //处理语音消息
+            }elseif($xml->MsgType=='voice'){//处理语音消息
                 $this->dlVoice($xml->MediaId);
+                $xml_response = '<xml><ToUserName><![CDATA[' . $openid . ']]></ToUserName><FromUserName><![CDATA[' . $xml->ToUserName . ']]></FromUserName><CreateTime>' . time() . '</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[' . date('Y-m-d H:i:s') . ']]></Content></xml>';
+                echo $xml_response;
             }elseif($xml->MsgType=='event'){
 
                 if($event=='subscribe'){    //判断事件类型
@@ -135,9 +137,10 @@ class WeixinController extends Controller
         $response = $client->get($url);
         //$h = $response->getHeaders();
         //echo '<pre>';print_r($h);echo '</pre>';die;
-
+//        var_dump($response);exit;
         //获取文件名
         $file_info = $response->getHeader('Content-disposition');
+//        var_dump($file_info);exit;
 
         $file_name = substr(rtrim($file_info[0],'"'),-20);
 
@@ -164,11 +167,13 @@ class WeixinController extends Controller
         //保存图片
         $client = new GuzzleHttp\Client();
         $response = $client->get($url);
+//        echo $response->getBody();die;
         //$h = $response->getHeaders();
         //echo '<pre>';print_r($h);echo '</pre>';die;
 
         //获取文件名
         $file_info = $response->getHeader('Content-disposition');
+//        var_dump($file_info);exit;
 
         $file_name = substr(rtrim($file_info[0],'"'),-20);
 
