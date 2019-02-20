@@ -64,7 +64,7 @@ class WeixinController extends Controller
                     $xml_response = '<xml><ToUserName><![CDATA[' . $openid . ']]></ToUserName><FromUserName><![CDATA[' . $xml->ToUserName . ']]></FromUserName><CreateTime>' . time() . '</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[' . date('Y-m-d H:i:s') . ']]></Content></xml>';
                     echo $xml_response;
                 }
-            }elseif($xml->MsgType=='vioce'){
+            }elseif($xml->MsgType=='voice'){           //处理语音消息
                 $this->dlVoice($xml->MediaId);
             }elseif($xml->MsgType=='event'){
 
@@ -156,9 +156,10 @@ class WeixinController extends Controller
     *下载语音文件
      * @param $media_id
      */
-    public function dlVoice($media_id){
+    public function dlVoice($media_id)
+    {
         $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken().'&media_id='.$media_id;
-        //echo $url;echo '</br>';
+//        echo $url;echo '</br>';die;
 
         //保存图片
         $client = new GuzzleHttp\Client();
@@ -179,6 +180,7 @@ class WeixinController extends Controller
         }else{      //保存失败
             //echo 'NO';
         }
+
     }
 
 
