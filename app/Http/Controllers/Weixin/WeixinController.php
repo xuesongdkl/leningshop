@@ -230,19 +230,28 @@ class WeixinController extends Controller
      */
     public function sendMsgs(){
 
-        $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token=ACCESS_TOKE'.$this->getWXAccessToken();
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token='.$this->getWXAccessToken();
 
         //请求微信接口
         $client = new GuzzleHttp\Client(['base_uri' => $url]);
         $data=[
-            "filter"=>[
-                "is_to_all"=>true,
-                "tag_id"=>2
+            "touser"=>[
+                "oNiPq5qguCnYBLX4aTasWJzcY6Q0",
+                "oNiPq5l_XzoTwS6BUuF5Mk_Cf3o4"
             ],
+            "msgtype"=> "text",
             "text"=>[
-                "content"=>"恭喜你，中奖了"
-            ],
-            "msgtype"=>"mpnews",
+                "content"=> "hello from boxer."
+            ]
+//],
+//            "filter"=>[
+//                "is_to_all"=>true,
+//                "tag_id"=>2
+//            ],
+//            "text"=>[
+//                "content"=>"恭喜你，中奖了"
+//            ],
+//            "msgtype"=>"mpnews",
         ];
         $r=$client->request('POST',$url,[
             'body'=>json_encode($data,JSON_UNESCAPED_UNICODE)
