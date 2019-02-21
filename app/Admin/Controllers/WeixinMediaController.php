@@ -92,9 +92,9 @@ class WeixinMediaController extends Controller
             if(substr($image,-3,3)=='mp4'){
                 $img='<a href="/wx/video/'.$image.">点击观看</a>';
             
-            }else{
-                $img='<img src="http://xsdkl.52self.cn/wx/images/'.$image.'" width=100 height=100>';
-            }
+            // }else{
+            //     $img='<img src="/wx/images/'.$image.'" width=100 height=100>';
+            // }
             return $img;
         });
         $grid->local_file_path('Local file path');
