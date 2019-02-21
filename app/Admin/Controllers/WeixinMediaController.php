@@ -92,7 +92,7 @@ class WeixinMediaController extends Controller
             if(substr($image,-3,3)=='mp4'){
                 $img='<a href="http://xsdkl.52self.cn/wx/video/'.$image.">点击观看</a>';
             }elseif(substr($image,-3,3)=='amr'){
-                $img='<a href="/wx/voice/'.$image.">点击聆听</a>';
+                $img='<a href="http://xsdkl.52self.cn/wx/voice/'.$image.">点击聆听</a>';
             }else{
                 $img='<img src="http://xsdkl.52self.cn/wx/images/'.$image.'" width=100 height=100>';
             }
