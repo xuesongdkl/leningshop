@@ -95,7 +95,7 @@ class WeixinMediaController extends Controller
             }elseif(substr($img,-3,3)=='amr'){
                 $common='<a href="/wx/voice/'.$img.'">下载语音</a>';
             }else{
-                $common='<img src="/wx/images/'.$img.'"width=80px; height=80px;>';
+                $common='<img src="http://xsdkl.52self.cn/wx/images/'.$img.'"width=80px; height=80px;>';
             }
             return $common;
 
