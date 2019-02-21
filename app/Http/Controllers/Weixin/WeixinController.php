@@ -80,7 +80,7 @@ class WeixinController extends Controller
                     var_dump($m_id);
                 }
             }elseif($xml->MsgType=='voice'){//处理语音消息
-                $this->dlVoice($xml->MediaId);
+                $file_name=$this->dlVoice($xml->MediaId);
                 $xml_response = '<xml><ToUserName><![CDATA[' . $openid . ']]></ToUserName><FromUserName><![CDATA[' . $xml->ToUserName . ']]></FromUserName><CreateTime>' . time() . '</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[' . date('Y-m-d H:i:s') . ']]></Content></xml>';
                 echo $xml_response;
 
@@ -98,7 +98,7 @@ class WeixinController extends Controller
                 $m_id=WeixinMedia::insertGetId($data);
                 var_dump($m_id);
             }elseif($xml->MsgType=='video'){//处理视频消息
-                $this->dlVideo($xml->MediaId);
+                $file_name=$this->dlVideo($xml->MediaId);
                 $xml_response = '<xml><ToUserName><![CDATA[' . $openid . ']]></ToUserName><FromUserName><![CDATA[' . $xml->ToUserName . ']]></FromUserName><CreateTime>' . time() . '</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[' . date('Y-m-d H:i:s') . ']]></Content></xml>';
                 echo $xml_response;
 
