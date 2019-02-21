@@ -151,3 +151,12 @@ Route::post('/weixin/valid','Weixin\WeixinController@validToken');
 
 Route::get('/weixin/create_menu','Weixin\WeixinController@createMenu'); //创建菜单
 Route::get('/weixin/sendsgs','Weixin\WeixinController@sendMsgs');//群发消息
+
+Route::get('/form/show','Weixin\WeixinController@formShow');     //表单测试
+Route::post('/form/test','Weixin\WeixinController@formTest');     //表单测试
+
+
+
+Route::get('/weixin/material/list','Weixin\WeixinController@materialList');     //获取永久素材列表
+Route::get('/weixin/material/upload','Weixin\WeixinController@upMaterial');     //上传永久素材
+Route::post('/weixin/material','Weixin\WeixinController@materialTest');     //创建菜单
