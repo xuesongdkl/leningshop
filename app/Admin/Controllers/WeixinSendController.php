@@ -145,7 +145,7 @@ class WeixinSendController extends Controller
         $url='https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token='.$this->getWXAccessToken();
 
         //请求微信接口
-        $client = new Guzz leHttp\Client(['base_uri' => $url]);
+        $client = new GuzzleHttp\Client(['base_uri' => $url]);
         $data=[
             // "touser"=>[
             //     "oNiPq5qguCnYBLX4aTasWJzcY6Q0",
