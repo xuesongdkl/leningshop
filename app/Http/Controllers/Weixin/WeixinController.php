@@ -288,7 +288,7 @@ class WeixinController extends Controller
             ],
             "msgtype"=> "text",
             "text"=>[
-                "content"=> "杜凯龙是二傻子"
+                "content"=> "杜凯龙是个弟弟"
             ]
 //],
 //            "filter"=>[
