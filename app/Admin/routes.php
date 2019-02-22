@@ -16,9 +16,10 @@ Route::group([
     $router->resource('/wx/wx_user',WeixinController::class);     //微信用户管理
     $router->resource('/wx/media',WeixinMediaController::class);   //微信素材管理
 
-    $router->get('/wx/sendmsg','WeixinSendController@sendViewMsgs');    //威胁你消息群发
+    $router->get('/wx/sendmsg','WeixinSendController@sendViewMsgs');    //微信消息群发
     $router->post('/wx/sendmsg', 'WeixinSendController@sendMsg');
 
-    $router->resource('/wx/for_media',WeixinForeverMediaController::class);   //微信素材管理
+    $router->resource('/wx/for_media',WeixinForeverMediaController::class);   //微信永久素材
+    $router->post('/wx/for_media','WeixinForeverMediaController@formTest');
 
 });
