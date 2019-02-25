@@ -602,7 +602,7 @@ class WeixinController extends Controller
      * 客服接口--发消息视图页面**/
     public function sendCustomMsgsView(){
         $data=[
-            'openid'=>'oNiPq5l_XzoTwS6BUuF5Mk_Cf3o4'
+            'openid'=>'oNiPq5qguCnYBLX4aTasWJzcY6Q0'
         ];
         return view('weixin.custom_msg',$data);
     }

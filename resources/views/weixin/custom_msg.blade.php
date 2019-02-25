@@ -5,12 +5,7 @@
     <div class="container">
         <h3>客服私聊</h3>
         <div class="chat" id="chat_div">
-           
-            {{--<div>--}}
-                {{--<div class="input-group">--}}
-                    {{--<textarea name="content" class="form-control" cols="50" rows="10" id="area"></textarea>--}}
-                {{--</div>--}}
-            {{--</div>--}}
+
         </div>
         <hr>
         <form class="form-inline">
