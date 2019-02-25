@@ -160,3 +160,7 @@ Route::post('/form/test','Weixin\WeixinController@formTest');     //表单测试
 Route::get('/weixin/material/list','Weixin\WeixinController@materialList');     //获取永久素材列表
 Route::get('/weixin/material/upload','Weixin\WeixinController@upMaterial');     //上传永久素材
 Route::post('/weixin/material','Weixin\WeixinController@materialTest');     //创建菜单
+
+
+Route::get('/weixin/sendchat','Weixin\WeixinController@sendCustomMsgsView');  //客服接口--发消息
+Route::get('/weixin/sendcustom','Weixin\WeixinController@sendCustomMsgs');

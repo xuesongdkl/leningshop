@@ -213,4 +213,35 @@ class WeixinSendController extends Controller
         return $token;
 
     }
+
+
+    /*
+     * 客服接口--发消息**/
+    public function sendCustomMsgs(){
+
+        $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$this->getWXAccessToken();
+
+        //请求微信接口
+        $client = new GuzzleHttp\Client(['base_uri' => $url]);
+        $data=[
+            "touser"=>"oNiPq5l_XzoTwS6BUuF5Mk_Cf3o4",
+            "msgtype"=>"text",
+            "text"=>[
+                "content"=>"Hello World"
+            ],
+        ];
+
+        $r=$client->request('POST',$url,[
+            'body'=>json_encode($data,JSON_UNESCAPED_UNICODE)
+        ]);
+        //解析微信接口 返回信息
+        $response_arr=json_decode($r->getBody(),true);
+
+        if($response_arr['errcode']==0){
+            echo "群发成功";
+        }else{
+            echo "群发失败";echo "<br>";
+            echo $response_arr['errmsg'];
+        }
+    }
 }
