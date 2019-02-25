@@ -601,8 +601,9 @@ class WeixinController extends Controller
     /*
      * 客服接口--发消息视图页面**/
     public function sendCustomMsgsView(){
+        $user=  WeixinUser::where(['id'=>2])->first();
         $data=[
-            'openid'=>'oNiPq5qguCnYBLX4aTasWJzcY6Q0'
+            'user'=>$user
         ];
         return view('weixin.custom_msg',$data);
     }
@@ -633,14 +634,14 @@ class WeixinController extends Controller
     }
 
     //客服给客户发消息
-    public function msgDb(){
+    public function msgDb(Request $request){
         $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$this->getWXAccessToken();
 
         //请求微信接口
         $client = new GuzzleHttp\Client(['base_uri' => $url]);
-        $message=$_POST['msg'];
-        $openid=$_POST['openid'];
-        $pos=$_POST['pos'];
+        $message=$request->input('msg');
+        $openid=$request->input('openid');
+        $pos=$request->input('pos');
         $data=[
             "touser"=>$openid,
             "msgtype"=>"text",
