@@ -41,7 +41,7 @@ $("#send_msg_btn").click(function(e){
         dataType:   'json',
         success :   function(d){
             if(d.errno==0){  //服务器响应正常
-                
+
             }else{
 
             }

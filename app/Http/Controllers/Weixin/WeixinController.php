@@ -609,14 +609,12 @@ class WeixinController extends Controller
 
 
     /*
-    * 客服接口--发消息**/
+    * 客服接口--接收消息**/
     public function sendCustomMsgs(){
 
         $openid=$_GET['openid'];//用户openid
 
         $pos=$_GET['pos'];   //上次聊天位置
-
-
 
         $msg=WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->first();
 
@@ -634,23 +632,41 @@ class WeixinController extends Controller
         die( json_encode($response));
     }
 
-    //客服消息入库
+    //客服给客户发消息
     public function msgDb(){
+        $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$this->getWXAccessToken();
+
+        //请求微信接口
+        $client = new GuzzleHttp\Client(['base_uri' => $url]);
         $message=$_POST['msg'];
         $openid=$_POST['openid'];
         $pos=$_POST['pos'];
         $data=[
-            'msg'=>$message,
-            'openid'=>$openid,
-            'add_time'=>time()
+            "touser"=>$openid,
+            "msgtype"=>"text",
+            "text"=>
+            [
+                "content"=>$message
+            ]
         ];
-        WeixinChatModel::insertGetId($data);
-        $msg=WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->first();
+        $r=$client->request('POST',$url,[
+            'body'=>json_encode($data,JSON_UNESCAPED_UNICODE)
+        ]);
+        //解析微信接口 返回信息
+        $response_arr=json_decode($r->getBody(),true);
 
-        if($msg){
+        if($response_arr){
+
             $response=[
+                $data=[
+                    'msg'=>$message,
+                    'add_time'=>time(),
+                    'openid'=>$openid,
+                    'msg_type'=>$pos
+                ],
+                WeixinChatModel::insertGetId($data),
                 'errno'=>0,
-                'data'=>$msg->toArray()
+                'data'=>$data
             ];
         }else{
             $response=[
