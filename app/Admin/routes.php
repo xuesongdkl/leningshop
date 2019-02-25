@@ -21,5 +21,9 @@ Route::group([
 
     $router->resource('/wx/for_media',WeixinForeverMediaController::class);   //微信永久素材
     $router->post('/wx/for_media','WeixinForeverMediaController@formTest');
+    $router->get('/wx/wx_user/create?user_id={user_id}','WeixinController@create');
+    $router->post('/wx/wx_user/test','WeixinController@msgDb');
+    $router->post('/wx/wx_user/test1','WeixinController@sendCustomMsgs');
+
 
 });

@@ -63,14 +63,14 @@ class WeixinController extends Controller
                 //记录聊天消息
 
                 $data = [
-                    'msg'       => $xml->Content,
+                    'msg'       => $msg,
                     'msgid'     => $xml->MsgId,
                     'openid'    => $openid,
                     'msg_type'  => 1 ,       // 1用户发送消息 2客服发送消息
                     'add_time'  => time()
                 ];
 
-                $id = WeixinChatModel::insertGetId($data);
+                $id = WeixinChatModel::insert($data);
 //                var_dump($id);
                 //$xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content></xml>';
 

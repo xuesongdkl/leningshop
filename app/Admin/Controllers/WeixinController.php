@@ -10,9 +10,17 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
+use Illuminate\Support\Facades\Redis;
+use GuzzleHttp;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Model\WeixinChatModel;
+
 class WeixinController extends Controller
 {
     use HasResourceActions;
+
+    protected $redis_weixin_access_token = 'str:weixin_access_token';
 
     /**
      * Index interface.
@@ -66,10 +74,17 @@ class WeixinController extends Controller
      */
     public function create(Content $content)
     {
+        $user_id=$_GET['user_id'];
+//        return $content
+//            ->header('Create')
+//            ->description('description')
+//            ->body($this->form());
+        $res=WeixinUser::where(['id'=>$user_id])->first();
         return $content
             ->header('Create')
             ->description('description')
-            ->body($this->form());
+            ->body(view('admin.weixin.chat',['user_info'=>$res])->render());
+
     }
 
     /**
@@ -91,9 +106,127 @@ class WeixinController extends Controller
             return '<img src="'.$url.'">';
         });
         $grid->subscribe_time('Subscribe time');
-
+        $grid->actions(function ($actions) {
+            // 获取当前行主键值
+            $key=$actions->getKey();
+            $actions->prepend('<a href="/admin/wx/wx_user/create?user_id='.$key.'"><i class="fa fa-paper-plane"></i></a>');
+        });
         return $grid;
     }
+
+
+    /*
+    * 客服接口--接收消息**/
+    public function sendCustomMsgs(Request $request){
+
+        $openid=$request->input('openid');//用户openid
+
+        $pos=$request->input('msg_pos');   //上次聊天位置
+
+        $msg=WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->first();
+
+        if($msg){
+            $response=[
+                'errno'=>0,
+                'data'=>$msg->toArray()
+            ];
+        }else{
+            $response=[
+                'errno'=>50001,
+                'data'=>'服务器异常'
+            ];
+        }
+        die( json_encode($response));
+    }
+
+    public function msgDb(){
+        $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$this->getWXAccessToken();
+
+        //请求微信接口
+        $client = new GuzzleHttp\Client(['base_uri' => $url]);
+        $message=$_POST['msg'];
+        $openid=$_POST['openid'];
+        $pos=$_POST['pos'];
+        $data=[
+            "touser"=>$openid,
+            "msgtype"=>"text",
+            "text"=>
+                [
+                    "content"=>$message
+                ]
+        ];
+        $r=$client->request('POST',$url,[
+            'body'=>json_encode($data,JSON_UNESCAPED_UNICODE)
+        ]);
+        //解析微信接口 返回信息
+        $response_arr=json_decode($r->getBody(),true);
+
+        if($response_arr){
+
+            $response=[
+                $data=[
+                    'msg'=>$message,
+                    'add_time'=>time(),
+                    'openid'=>$openid,
+                    'msg_type'=>$pos
+                ],
+                WeixinChatModel::insertGetId($data),
+                'errno'=>0,
+                'data'=>$data
+            ];
+        }else{
+            $response=[
+                'errno'=>50001,
+                'data'=>'服务器异常'
+            ];
+        }
+        die( json_encode($response));
+
+    }
+
+    /**
+     * 获取微信AccessToken
+     */
+    public function getWXAccessToken()
+    {
+
+        //获取缓存
+        $token = Redis::get($this->redis_weixin_access_token);
+        if(!$token){        // 无缓存 请求微信接口
+            $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WEIXIN_APPID').'&secret='.env('WEIXIN_APPSECRET');
+            $data = json_decode(file_get_contents($url),true);
+
+            //记录缓存
+            $token = $data['access_token'];
+            Redis::set($this->redis_weixin_access_token,$token);
+            Redis::setTimeout($this->redis_weixin_access_token,3600);
+        }
+        return $token;
+
+    }
+
+    /**
+     * 获取用户信息
+     * @param $openid
+     */
+    public function getUserInfo($openid)
+    {
+//        $openid = 'oLreB1jAnJFzV_8AGWUZlfuaoQto';
+        $access_token = $this->getWXAccessToken();
+        $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN';
+
+        $data = json_decode(file_get_contents($url),true);
+//        echo '<pre>';print_r($data);echo '</pre>';
+        return $data;
+    }
+
+    /*
+     * 更新access_token**/
+    public function refreshToken(){
+        Redis::del($this->redis_weixin_access_token);
+        echo $this->getWXAccessToken();
+    }
+
 
     /**
      * Make a show builder.
