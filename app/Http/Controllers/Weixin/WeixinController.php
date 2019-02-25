@@ -71,7 +71,7 @@ class WeixinController extends Controller
                 ];
 
                 $id = WeixinChatModel::insertGetId($data);
-                var_dump($id);
+//                var_dump($id);
                 //$xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. $msg. date('Y-m-d H:i:s') .']]></Content></xml>';
 
 
