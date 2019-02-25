@@ -164,4 +164,4 @@ Route::post('/weixin/material','Weixin\WeixinController@materialTest');     //�
 
 Route::get('/weixin/sendchat','Weixin\WeixinController@sendCustomMsgsView');  //客服接口--发消息
 Route::get('/weixin/sendcustom','Weixin\WeixinController@sendCustomMsgs');
-Route::post('/weixin/sendcustom','Weixin\WeixinController@sendCustomMsgs');
+Route::post('/weixin/sendcustom','Weixin\WeixinController@msgDb');

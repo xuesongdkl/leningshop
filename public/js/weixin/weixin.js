@@ -1,6 +1,8 @@
 var openid=$('#openid').val();
 
 
+
+
 setInterval(function(){
     $.ajax({
         headers: {
@@ -22,7 +24,6 @@ setInterval(function(){
     });
 },5000);
 
-
 //客服发送消息
 $("#send_msg_btn").click(function(e){
     e.preventDefault();
@@ -36,11 +37,11 @@ $("#send_msg_btn").click(function(e){
         },
         url     :   '/weixin/sendcustom',
         type    :   'post',
-        data    :    {msg:msg},
+        data    :    {msg:msg,openid:openid,pos:2},
         dataType:   'json',
         success :   function(d){
             if(d.errno==0){  //服务器响应正常
-
+                
             }else{
 
             }

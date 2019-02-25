@@ -616,15 +616,11 @@ class WeixinController extends Controller
 
         $pos=$_GET['pos'];   //上次聊天位置
 
-        $message=$_POST['msg'];
+
 
         $msg=WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->first();
 
         if($msg){
-            $data=[
-                'msg'=>$message
-            ];
-            WeixinChatModel::insertGetId($data);
             $response=[
                 'errno'=>0,
                 'data'=>$msg->toArray()
@@ -638,4 +634,31 @@ class WeixinController extends Controller
         die( json_encode($response));
     }
 
+    //客服消息入库
+    public function msgDb(){
+        $message=$_POST['msg'];
+        $openid=$_POST['openid'];
+        $pos=$_POST['pos'];
+        $data=[
+            'msg'=>$message,
+            'openid'=>$openid,
+            'add_time'=>time()
+        ];
+        WeixinChatModel::insertGetId($data);
+        $msg=WeixinChatModel::where(['openid'=>$openid])->where('id','>',$pos)->first();
+
+        if($msg){
+            $response=[
+                'errno'=>0,
+                'data'=>$msg->toArray()
+            ];
+        }else{
+            $response=[
+                'errno'=>50001,
+                'data'=>'服务器异常'
+            ];
+        }
+        die( json_encode($response));
+
+    }
 }
