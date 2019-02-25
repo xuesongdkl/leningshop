@@ -5,8 +5,7 @@
     <div class="container">
         <h3>客服私聊</h3>
         <div class="chat" id="chat_div">
-            <span> <font size="4px"><b>聊天记录</b></font></span>
-            <hr>
+           
             {{--<div>--}}
                 {{--<div class="input-group">--}}
                     {{--<textarea name="content" class="form-control" cols="50" rows="10" id="area"></textarea>--}}
