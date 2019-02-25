@@ -30,4 +30,20 @@ $("#send_msg_btn").click(function(e){
     var msg_str = '<p style="color: mediumpurple"> '+msg+'</p>';
     $("#chat_div").append(msg_str);
     $("#msg").val("");
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url     :   '/weixin/sendcustom',
+        type    :   'post',
+        data    :    {msg:msg},
+        dataType:   'json',
+        success :   function(d){
+            if(d.errno==0){  //服务器响应正常
+
+            }else{
+
+            }
+        }
+    });
 });
