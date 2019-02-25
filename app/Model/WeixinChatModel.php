@@ -8,4 +8,5 @@ class WeixinChatModel extends Model
 {
     //
 	public $table = 'p_wx_chat';
+//	public $timestamps=false;
 }
