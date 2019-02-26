@@ -165,3 +165,7 @@ Route::post('/weixin/material','Weixin\WeixinController@materialTest');     //�
 Route::get('/weixin/sendchat','Weixin\WeixinController@sendCustomMsgsView');  //客服接口--发消息
 Route::get('/weixin/sendcustom','Weixin\WeixinController@sendCustomMsgs');
 Route::post('/weixin/sendcustom','Weixin\WeixinController@msgDb');
+
+//微信支付
+Route::get('/weixin/pay/test','Weixin\PayController@test');      //微信支付测试
+Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
