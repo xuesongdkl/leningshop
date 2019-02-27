@@ -135,7 +135,7 @@ class PayController extends Controller
 
 
     public function wxSign($xml){
-        $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         $this->values =[];
         $this->values =$data;
 
