@@ -20,7 +20,8 @@
                 <td>{{date('Y-m-d H:i:s',$v['add_time'])}}</td>
                 <td>
                     @if($v['is_pay']==0&&$v['is_delete']==0)
-                        <a href="/pay/o/{{$v['order_id']}}">去支付</a>
+                        <a href="/pay/o/{{$v['order_id']}}">支付宝支付</a>||
+                        <a href="/weixin/pay/test/{{$v['order_sn']}}">微信支付</a>
                     @elseif($v['is_pay']==1)
                         <a href="">已支付</a>
                     @elseif($v['is_delete']==1)

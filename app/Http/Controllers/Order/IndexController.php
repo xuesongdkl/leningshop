@@ -46,7 +46,7 @@ class IndexController extends Controller
             'order_sn'      => $order_sn,
             'uid'           => session()->get('uid'),
             'add_time'      => time(),
-            'order_amount'  => $order_amount
+            'order_amount'  => 1000
         ];
         $oid=OrderModel::insertGetId($data);
 //        dump($oid);die;
@@ -73,6 +73,5 @@ class IndexController extends Controller
         ];
         return view('order.index',$data);
     }
-
 
 }

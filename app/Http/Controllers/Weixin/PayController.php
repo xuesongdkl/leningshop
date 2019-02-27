@@ -12,9 +12,9 @@ class PayController extends Controller
     public $weixin_notify_url = 'http://xsdkl.52self.cn/weixin/pay/notice';     //支付通知回调
 
     //下单
-    public function test(){
+    public function test($order_id){
+        $order=OrderModer::where(['order_id'=>$order_id])->first();
         $total_fee=1;       //用户要支付的总金额
-        $order_id=OrderModel::generateOrderSN();
 
         $order_info=[
             'appid'           =>  env('WEIXIN_APPID_0'),     //微信支付绑定的服务号的APPID
@@ -22,7 +22,7 @@ class PayController extends Controller
             'nonce_str'       =>  str_random(16),       //随机字符串
             'sign_type'       =>  'MD5',
             'body'            =>  '测试订单-'.mt_rand(1111,9999).str_random(6),
-            'out_trade_no'    =>  $order_id,          //本地订单号
+            'out_trade_no'    =>  $order['order_sn'],          //本地订单号
             'total_fee'       =>  $total_fee,
             'spbill_create_ip'=>  $_SERVER['REMOTE_ADDR'],    //客户端IP
             'notify_url'      =>  $this->weixin_notify_url,        //通知回调地址
@@ -40,8 +40,34 @@ class PayController extends Controller
 //        var_dump($rs);exit;
         $data=simplexml_load_string($rs);
 
-        echo 'code_url:'.$data->code_url;echo "<br>";
+        $r=$data->code_url;       //二维码路径
+        $re=base64_encode($r);
+        header("refresh:0;url='/weixin/pay/payqr/$re'");
         //将 code_url 返回给前端，前端生成 支付二维码
+    }
+
+    public function payqr($re){
+        $r=base64_decode($re);
+        $order_id=$_COOKIE['order_id'];
+        $data=[
+            'curl'=>$r,
+            'order_id'=>$order_id
+        ];
+        return view('weixin.pay',$data);
+    }
+
+    public function issuccess(Request $request){
+        $order_id=$request->input('order_id');
+        $data=OrderModel::where('order_sn',$order_id)->first();
+        if($data['is_pay']==2){
+            echo 2;
+        }else{
+            echo 1;
+        }
+    }
+
+    public function success(){
+        echo "支付成功";
     }
 
     protected function ToXml(){
@@ -137,9 +163,16 @@ class PayController extends Controller
         $xml=simplexml_load_string($data);
         if($xml->result_code=='SUCCESS'&&$xml->return_code=='SUCCESS'){   //微信支付成功回调
             //验证签名
-            $sign=true;
-            if($sign){  //签名验证成功
+            $sign=$xml->SetSign();
+            if($xml->sign==$sign){  //签名验证成功
                 //TODO 逻辑处理  订单状态更新
+                $oid=$xml->out_trade_no;        //商户订单号
+                $data=[
+                    'pay_time'   =>time(),
+                    'is_pay'     =>1,               //支付状态
+
+                ];
+                OrderModel::where(['order_sn'=>$oid])->update($data);
             }else{
                 //TODO 失败
                 echo '验签失败，IP:'.$_SERVER['REMOTE_ADDR'];
@@ -148,7 +181,5 @@ class PayController extends Controller
         }
         $response='<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         echo $response;
-
-
     }
 }
