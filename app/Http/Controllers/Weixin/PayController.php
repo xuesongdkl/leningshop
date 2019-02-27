@@ -15,6 +15,7 @@ class PayController extends Controller
     //下单
     public function test($order_id){
         $order=OrderModel::where(['order_id'=>$order_id])->first();
+//       echo $order['order_sn'];die;
         $total_fee=1;       //用户要支付的总金额
 
         $order_info=[
@@ -40,10 +41,11 @@ class PayController extends Controller
 
 //        var_dump($rs);exit;
         $data=simplexml_load_string($rs);
-
+//        echo $data->return_code;
+//        echo $data->return_msg;die;
 //        var_dump($data);exit;
         $r=$data->code_url;//二维码路径
-//        var_dump($r);die;
+
         $re=[
             'r'=>$r
         ];
@@ -61,19 +63,19 @@ class PayController extends Controller
 //        return view('weixin.pay',$data);
 //    }
 
-    public function issuccess(Request $request){
-        $order_id=$request->input('order_id');
-        $data=OrderModel::where('order_sn',$order_id)->first();
-        if($data['is_pay']==2){
-            echo 2;
-        }else{
-            echo 1;
-        }
-    }
-
-    public function success(){
-        echo "支付成功";
-    }
+//    public function issuccess(Request $request){
+//        $order_id=$request->input('order_id');
+//        $data=OrderModel::where('order_sn',$order_id)->first();
+//        if($data['is_pay']==2){
+//            echo 2;
+//        }else{
+//            echo 1;
+//        }
+//    }
+//
+//    public function success(){
+//        echo "支付成功";
+//    }
 
     protected function ToXml(){
         if(!is_array($this->values)

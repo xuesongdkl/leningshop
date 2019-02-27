@@ -12,11 +12,11 @@ class OrderModel extends Model
     public $timestamps = false;
 
 
-    /**
+    /**22
      * 生成订单号
      */
     public static function generateOrderSN()
     {
-        return 'xs'.date('ymdHi') . rand(11111,99999) . rand(2222,9999);
+        return 'xs'.date('ymdHis').rand(11111,99999);
     }
 }
