@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Weixin;
 
+use App\Model\GoodsModel;
 use App\Model\OrderModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -132,6 +133,21 @@ class PayController extends Controller
         return $buff;
     }
 
+
+    public function wxSign($xml){
+        $data = json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
+        $this->values =[];
+        $this->values =$data;
+
+        $sign=$this->SetSign();
+        if($sign==$data['sign']){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
     /**
      * 微信支付回调
      */
@@ -144,7 +160,7 @@ class PayController extends Controller
         //逻辑处理 订单状态
         $xml=simplexml_load_string($data);
         if($xml->result_code=='SUCCESS'&&$xml->return_code=='SUCCESS'){   //微信支付成功回调
-            $sign=true;
+            $sign=$this->wxSign($xml);
             //验证签名
             if ($sign) {       //签名验证成功
                 // 逻辑处理  订单状态更新
@@ -159,7 +175,6 @@ class PayController extends Controller
                     'is_pay' => 1,       //支付状态  0未支付 1已支付
                     'pay_time'=>time()
                 ];
-
                 OrderModel::where($where)->update($data);
             }else{
                 //TODO 失败
