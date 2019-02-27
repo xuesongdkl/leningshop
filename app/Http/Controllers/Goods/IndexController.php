@@ -19,37 +19,7 @@ class IndexController extends Controller
      */
     public function index($goods_id)
     {
-//        $redis_goods_key="h_goods_info_".$goods_id;
-//        echo $redis_goods_key;
-//        $goods_info=Redis::hGetAll($redis_goods_key);
-//        if($goods_info){
-//            echo "Redis";
-//            echo "<pre>";print_r($goods_info);echo "</pre>";
-//        }else{
-//            echo "Mysql";
-//            $goods = GoodsModel::where(['goods_id'=>$goods_id])->first()->toArray();
-//            echo "<pre>";print_r($goods);echo "</pre>";
-//            //写入缓存
-//            $rs=Redis::hmset($redis_goods_key,$goods);
-//            //设置缓存过期时间
-//            Redis::expire($redis_goods_key,10);
-//        }
-////
-//        die;
-//        //商品不存在
-//        if(empty($goods)){
-//            header('Refresh:2;url=/');
-//            echo '商品不存在,正在跳转至首页';
-//            exit;
-//        }
-//
-//        $data = [
-//            'goods' => $goods
-//        ];
-//        return view('goods.index',$data);
-
-
-
+        
         $goods=GoodsModel::where(['goods_id'=>$goods_id])->first();
         if(!$goods){
             header('Refresh:1;url=/');
