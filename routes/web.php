@@ -167,8 +167,5 @@ Route::get('/weixin/sendcustom','Weixin\WeixinController@sendCustomMsgs');
 Route::post('/weixin/sendcustom','Weixin\WeixinController@msgDb');
 
 //微信支付
-Route::get('/weixin/pay/test/{order_id}','Weixin\PayController@test');      //微信支付测试
-//Route::get('/weixin/pay/payqr/{re}','Weixin\PayController@payqr');      //微信支付
+Route::get('/weixin/pay/test/{order_id}','Weixin\PayController@test');      //微信支付
 Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
-//Route::post('/weixin/pay/issuccess','Weixin\PayController@issuccess');
-//Route::get('/weixin/pay/testoroder/{order_id}','Weixin\PayController@test');

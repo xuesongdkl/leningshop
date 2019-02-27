@@ -43,9 +43,7 @@ class PayController extends Controller
         $data=simplexml_load_string($rs);
 //        echo $data->return_code;
 //        echo $data->return_msg;die;
-//        var_dump($data);exit;
         $r=$data->code_url;//二维码路径
-
         $re=[
             'r'=>$r
         ];
@@ -53,29 +51,6 @@ class PayController extends Controller
         //将 code_url 返回给前端，前端生成 支付二维码
     }
 
-//    public function payqr($re){
-//        $r=base64_decode($re);
-//        $order_id=$_COOKIE['order_id'];
-//        $data=[
-//            'curl'=>$r,
-//            'order_id'=>$order_id
-//        ];
-//        return view('weixin.pay',$data);
-//    }
-
-//    public function issuccess(Request $request){
-//        $order_id=$request->input('order_id');
-//        $data=OrderModel::where('order_sn',$order_id)->first();
-//        if($data['is_pay']==2){
-//            echo 2;
-//        }else{
-//            echo 1;
-//        }
-//    }
-//
-//    public function success(){
-//        echo "支付成功";
-//    }
 
     protected function ToXml(){
         if(!is_array($this->values)
@@ -169,17 +144,23 @@ class PayController extends Controller
         //逻辑处理 订单状态
         $xml=simplexml_load_string($data);
         if($xml->result_code=='SUCCESS'&&$xml->return_code=='SUCCESS'){   //微信支付成功回调
+            $sign=true;
             //验证签名
-            $sign=$xml->SetSign();
-            if($xml->sign==$sign){  //签名验证成功
-                //TODO 逻辑处理  订单状态更新
-                $oid=$xml->out_trade_no;        //商户订单号
-                $data=[
-                    'pay_time'   =>time(),
-                    'is_pay'     =>1,               //支付状态
+            if ($sign) {       //签名验证成功
+                // 逻辑处理  订单状态更新
+                //验证订单交易状态
 
+                //更新订单状态
+                $order_sn =$xml->out_trade_no;
+                $where=[
+                    'order_sn' =>$order_sn
                 ];
-                OrderModel::where(['order_sn'=>$oid])->update($data);
+                $data = [
+                    'is_pay' => 1,       //支付状态  0未支付 1已支付
+                    'pay_time'=>time()
+                ];
+
+                OrderModel::where($where)->update($data);
             }else{
                 //TODO 失败
                 echo '验签失败，IP:'.$_SERVER['REMOTE_ADDR'];
