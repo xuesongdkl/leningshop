@@ -13,7 +13,7 @@ class PayController extends Controller
 
     //下单
     public function test($order_id){
-        $order=OrderModer::where(['order_id'=>$order_id])->first();
+        $order=OrderModel::where(['order_id'=>$order_id])->first();
         $total_fee=1;       //用户要支付的总金额
 
         $order_info=[

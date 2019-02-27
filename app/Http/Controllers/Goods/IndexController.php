@@ -19,7 +19,7 @@ class IndexController extends Controller
      */
     public function index($goods_id)
     {
-        
+
         $goods=GoodsModel::where(['goods_id'=>$goods_id])->first();
         if(!$goods){
             header('Refresh:1;url=/');
