@@ -1,22 +1,11 @@
-
-<script src="{{URL::asset('/js/jquery-1.12.4.min.js')}}"></script>
-<script src="{{URL::asset('/js/jquery.min.js')}}"></script>
-<script src="{{URL::asset('/js/qrcode.js')}}"></script>
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    {{--<script type="text/javascript" src="/js/jquery.min.js"></script>--}}
-    {{--<script type="text/javascript" src="/js/qrcode.js"></script>--}}
-</head>
-<body>
+@extends("layouts.bst")
+@section('content')
     <h1 align="center">微信扫码支付<h1>
     <div align="center" id="qrcode"></div>
-            <input type="hidden" value="{{$order_id}}" id="order_id">
-</body>
-</html>
+    <input type="hidden" value="{{$order_id}}" id="order_id">
+@endsection
+<script src="{{URL::asset('/js/jquery.min.js')}}"></script>
+<script src="{{URL::asset('/js/qrcode.js')}}"></script>
 <script>
     var qrcode = new QRCode(document.getElementById('qrcode'), {
         text: "{{$r}}",
