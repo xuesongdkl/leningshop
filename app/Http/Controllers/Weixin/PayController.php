@@ -134,8 +134,8 @@ class PayController extends Controller
     }
 
 
-    public function wxSign($xml){
-        $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+    public function wxSign($data){
+
         $this->values =[];
         $this->values =$data;
 
@@ -158,8 +158,8 @@ class PayController extends Controller
         file_put_contents('logs/wx_pay_notice.log',$log_str,FILE_APPEND);
 
         //逻辑处理 订单状态
-        $xml=simplexml_load_string($data);
-        if($xml->result_code=='SUCCESS'&&$xml->return_code=='SUCCESS'){   //微信支付成功回调
+        $xml= (array)simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if($xml['result_code']=='SUCCESS'&&$xml['return_code']=='SUCCESS'){   //微信支付成功回调
             $sign=$this->wxSign($xml);
             //验证签名
             if ($sign) {       //签名验证成功
@@ -167,7 +167,7 @@ class PayController extends Controller
                 //验证订单交易状态
 
                 //更新订单状态
-                $order_sn =$xml->out_trade_no;
+                $order_sn =$xml['out_trade_no'];
                 $where=[
                     'order_sn' =>$order_sn
                 ];
