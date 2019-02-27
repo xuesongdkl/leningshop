@@ -1,10 +1,15 @@
-{{--<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>--}}<!doctype html>
+
+<script src="{{URL::asset('/js/jquery-1.12.4.min.js')}}"></script>
+<script src="{{URL::asset('/js/jquery.min.js')}}"></script>
+<script src="{{URL::asset('/js/qrcode.js')}}"></script>
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/qrcode.js"></script>
+    {{--<script type="text/javascript" src="/js/jquery.min.js"></script>--}}
+    {{--<script type="text/javascript" src="/js/qrcode.js"></script>--}}
 </head>
 <body>
     <h1 align="center">微信扫码支付<h1>
