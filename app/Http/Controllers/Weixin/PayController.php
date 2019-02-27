@@ -6,6 +6,7 @@ use App\Model\OrderModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+
 class PayController extends Controller
 {
     public $weixin_unifiedorder_url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
@@ -40,7 +41,9 @@ class PayController extends Controller
 //        var_dump($rs);exit;
         $data=simplexml_load_string($rs);
 
-        $r=$data->code_url;       //二维码路径
+//        var_dump($data);exit;
+        $r=$data->code_url;//二维码路径
+//        var_dump($r);die;
         $re=[
             'r'=>$r
         ];
