@@ -41,20 +41,22 @@ class PayController extends Controller
         $data=simplexml_load_string($rs);
 
         $r=$data->code_url;       //二维码路径
-        $re=base64_encode($r);
-        header("refresh:0;url='/weixin/pay/payqr/$re'");
+        $re=[
+            'r'=>$r
+        ];
+        return view('weixin.pay',$re);
         //将 code_url 返回给前端，前端生成 支付二维码
     }
 
-    public function payqr($re){
-        $r=base64_decode($re);
-        $order_id=$_COOKIE['order_id'];
-        $data=[
-            'curl'=>$r,
-            'order_id'=>$order_id
-        ];
-        return view('weixin.pay',$data);
-    }
+//    public function payqr($re){
+//        $r=base64_decode($re);
+//        $order_id=$_COOKIE['order_id'];
+//        $data=[
+//            'curl'=>$r,
+//            'order_id'=>$order_id
+//        ];
+//        return view('weixin.pay',$data);
+//    }
 
     public function issuccess(Request $request){
         $order_id=$request->input('order_id');

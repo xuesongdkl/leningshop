@@ -6,7 +6,6 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
 
     <title>BootStrap</title>
-    <script src="{{URL::asset('/bootstrap/js/jquery.qrcode.min.js')}}"></script>
 
     <link rel="stylesheet" href="{{URL::asset('/bootstrap/css/bootstrap.min.css')}}">
 </head>
