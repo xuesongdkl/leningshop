@@ -690,7 +690,7 @@ class WeixinController extends Controller
     public function getCode(){
         echo '<pre>';print_r($_GET);echo '</pre>';
         $code = $_GET['code'];
-        echo 'code: '.$code;
+        echo 'code: '.$code;die;
 
         //2 用code换取access_token 请求接口
 
