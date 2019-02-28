@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Weixin;
 
 use App\Model\WeixinMedia;
 use App\Model\WeixinUser;
+use App\Model\WeixinUserModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -679,10 +680,6 @@ class WeixinController extends Controller
 
     }
 
-    //微信登录
-    public function login(){
-        return view('weixin.login');
-    }
 
     /**
     *接收code
@@ -709,7 +706,25 @@ class WeixinController extends Controller
 
         $user_arr = json_decode($user_json,true);
         echo '<hr>';
-        echo '<pre>';print_r($user_arr);echo '</pre>';;
+        echo '<pre>';print_r($user_arr);echo '</pre>';
+
+
+        $data=[
+            'openid'=>$user_arr['openid'],
+            'nickname'=>$user_arr['nickname'],
+            'sex'     =>$user_arr['sex'],
+            'language'=>$user_arr['language'],
+            'headimgurl'=>$user_arr['headimgurl'],
+            'unionid'=>$user_arr['unionid'],
+            'add_time'=>time()
+        ];
+        $res=WeixinUserModel::insertGetId($data);
+        if($res){
+            echo "添加成功";
+        }else{
+            echo "添加失败";
+        }
+
   }
 
 
