@@ -694,7 +694,7 @@ class WeixinController extends Controller
 
         //2 用code换取access_token 请求接口
 
-        $token_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxdbf8b766bc40d75f&secret=d8cbf853a7f4e38a55e170da86458a1f&code='.$code.'&grant_type=authorization_code';
+        $token_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxe24f70961302b5a5&secret=0f121743ff20a3a454e4a12aeecef4be&code='.$code.'&grant_type=authorization_code';
         $token_json = file_get_contents($token_url);
         $token_arr = json_decode($token_json,true);
         echo '<hr>';
@@ -709,7 +709,7 @@ class WeixinController extends Controller
 
         $user_arr = json_decode($user_json,true);
         echo '<hr>';
-        echo '<pre>';print_r($user_arr);echo '</pre>';
+        echo '<pre>';print_r($user_arr);echo '</pre>';;
   }
 
 
