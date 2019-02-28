@@ -171,3 +171,7 @@ Route::get('/weixin/pay/test/{order_id}','Weixin\PayController@test');      //�
 Route::get('/weixin/pay/success','Weixin\PayController@success');      //微信支付
 Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
 Route::post('/weixin/pay/qrpay','Weixin\PayController@qrpay');     //微信支付通知回调
+
+//微信登录
+Route::get('/weixin/login','Weixin\WeixinController@login');     //视图页面
+Route::get('/weixin/getcode','Weixin\WeixinController@getCode');     //接收code
