@@ -95,8 +95,8 @@ class UserController extends Controller
 			if(password_verify($pwd,$res->password)){
 
 				$token = substr(md5(time().mt_rand(1,99999)),10,10);
-				setcookie('name',$res->name,time()+86400,'/','shop.lening.com',false,true);
-				setcookie('uid',$res->uid,time()+86400,'/','shop.lening.com',false,true);
+				setcookie('name',$res->name,time()+86400,'/','',false,true);
+				setcookie('uid',$res->uid,time()+86400,'/','',false,true);
 				setcookie('token',$token,time()+86400,'/','',false,true);
 				$request->session()->put('uid',$res->uid);
 				$request->session()->put('p_token',$token);
