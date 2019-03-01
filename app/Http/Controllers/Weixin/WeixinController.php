@@ -743,10 +743,10 @@ class WeixinController extends Controller
         }
 
         $token=substr(md5(time().mt_rand(1,99999)),10,10);
-        setcookie('uid',$user_info['uid'],time()+86400,'/','',false,true);
+        setcookie('uid',$user_info->uid,time()+86400,'/','',false,true);
         setcookie('token',$token,time()+86400,'/','',false,true);
         $request->session()->put('u_token',$token);
-        $request->session()->put('uid',$user_info['uid']);
+        $request->session()->put('uid',$user_info->uid);
         echo "登录成功";
         header("refresh:2,url='/goods/list'");
     }
