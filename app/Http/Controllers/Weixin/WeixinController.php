@@ -723,10 +723,11 @@ class WeixinController extends Controller
                 'nickname'      =>  $user_arr['nickname'],
                 'sex'           =>  $user_arr['sex'],
                 'headimgurl'    =>  $user_arr['headimgurl'],
-                'unionid'      =>  $unionid,
+                'unionid'       =>  $unionid,
                 'add_time'      =>  time()
             ];
             $wx_id = WeixinUserModel::insertGetId($data);
+            var_dump($wx_id);die;
             $rs = UserModel::insertGetId(['wx_id'=>$wx_id]);
             if($rs){
                 $token=substr(md5(time().mt_rand(1,99999)),10,10);
