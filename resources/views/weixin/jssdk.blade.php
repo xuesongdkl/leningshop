@@ -5,6 +5,9 @@
         <h2>JSSDK</h2>
         <button id="btn1">选择照片</button>
         <button id="btn2">微信扫一扫</button>
+        <button id="btn3">微信上传图片</button>
+        <button id="btn4">获取本地图片接口</button>
+        <button id="btn5">开始录音</button>
     </div>
 
 @endsection
@@ -43,6 +46,29 @@
                         var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
                     }
                 });
+            });
+            //微信上传图片
+            $('#btn3').click(function(){
+                wx.uploadImage({
+                    localId: '', // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (res) {
+                        var serverId = res.serverId; // 返回图片的服务器端ID
+                    }
+                })
+            });
+            //获取本地图片接口
+            $('#btn4').click(function(){
+                wx.getLocalImgData({
+                    localId: '', // 图片的localID
+                    success: function (res) {
+                        var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                    }
+                });
+            });
+            //录音接口
+            $('#btn5').click(function() {
+                wx.startRecord();
             });
         });
     </script>
