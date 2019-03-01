@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>JSSDK</h2>
-        <button></button>
+        <button id="btn1">选择照片</button>
     </div>
 
 @endsection
