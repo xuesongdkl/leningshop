@@ -3,13 +3,13 @@
 @section('content')
     <div class="container">
         <h2>JSSDK</h2>
+        <button></button>
     </div>
 
 @endsection
 
 @section('footer')
     @parent
-    <script src="{{URL::asset('/js/weixin/weixin.js')}}"></script>
     <script src="http://res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <script>
         wx.config({
@@ -19,6 +19,9 @@
             nonceStr: "{{$jsconfig['noncestr']}}", // 必填，生成签名的随机串
             signature: "{{$jsconfig['sign']}}",// 必填，签名
             jsApiList: ['chooseImage','uploadImage','getLocalImgData','startRecord'] // 必填，需要使用的JS接口列表
+        });
+        wx.ready(function(){
+            alert(111);
         });
     </script>
 @endsection
