@@ -758,7 +758,7 @@ class WeixinController extends Controller
     public function jssdkTest(){
         //js配置
         $jsconfig=[
-            'appid'      => env('WEIXIN_APPID_0'),
+            'appid'      => env('WEIXIN_APPID'),
             'timestamp'  => time(),
             'noncestr'   => str_random(10),
 //            'sign'       => $this->wxJsConfigSign()
@@ -768,6 +768,7 @@ class WeixinController extends Controller
         $data=[
             'jsconfig'  =>$jsconfig
         ];
+        echo $jsconfig['sign'];die;
         return view('weixin.jssdk',$data);
     }
 
