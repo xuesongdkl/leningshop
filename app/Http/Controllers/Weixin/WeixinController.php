@@ -712,7 +712,7 @@ class WeixinController extends Controller
         //查询数据库中是否有该证号
         $unionid=$user_arr['unionid'];
         $where=['unionid'=>$unionid];
-        $wx_user_info = WeixinUserModel::where($where)->first();
+        $wx_user_info = WeixinUser::where($where)->first();
         if($wx_user_info){
             $user_info = UserModel::where(['wx_id'=>$wx_user_info->id])->first();
         }
@@ -726,8 +726,7 @@ class WeixinController extends Controller
                 'unionid'       =>  $unionid,
                 'add_time'      =>  time()
             ];
-            $wx_id = WeixinUserModel::insertGetId($data);
-            var_dump($wx_id);die;
+            $wx_id = WeixinUser::insertGetId($data);
             $rs = UserModel::insertGetId(['wx_id'=>$wx_id]);
             if($rs){
                 $token=substr(md5(time().mt_rand(1,99999)),10,10);
@@ -752,4 +751,31 @@ class WeixinController extends Controller
         header("refresh:2,url='/goods/list'");
     }
 
+
+
+    //微信jssdk
+    public function jssdkTest(){
+        //js配置
+        $jsconfig=[
+            'appid'      => env('WEIXIN_APPID_0'),
+            'timestamp'  => time(),
+            'noncestr'   => str_random(10),
+            'sign'       => $this->wxJsConfigSign()
+        ];
+
+        $data=[
+            'jsconfig'  =>$jsconfig
+        ];
+        return view('weixin.jssdk',$data);
+    }
+
+    /**
+     * 计算JSSDK sign
+     */
+    public function wxJsConfigSign()
+    {
+
+        $sign = str_random(15);
+        return $sign;
+    }
 }

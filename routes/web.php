@@ -175,3 +175,6 @@ Route::post('/weixin/pay/qrpay','Weixin\PayController@qrpay');     //微信支�
 //微信登录
 //Route::get('/weixin/login','Weixin\WeixinController@login');     //视图页面
 Route::get('/weixin/getcode','Weixin\WeixinController@getCode');     //接收code
+
+//微信jssdk
+Route::get('/weixin/jssdk/test','Weixin\WeixinController@jssdkTest');
