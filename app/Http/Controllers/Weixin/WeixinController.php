@@ -768,7 +768,7 @@ class WeixinController extends Controller
         $data=[
             'jsconfig'  =>$jsconfig
         ];
-        echo $jsconfig['sign'];die;
+//        echo $jsconfig['sign'];die;
         return view('weixin.jssdk',$data);
     }
 
