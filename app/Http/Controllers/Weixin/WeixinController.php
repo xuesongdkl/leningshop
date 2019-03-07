@@ -152,7 +152,7 @@ class WeixinController extends Controller
 
                     //保存用户信息
                     $u = WeixinUser::where(['openid'=>$openid])->first();
-                    //var_dump($u);die;
+                    var_dump($u);die;
                     if($u){       //用户不存在
                         echo '此用户已存在';
                     }else {
@@ -166,7 +166,7 @@ class WeixinController extends Controller
                         ];
 
                         $id = WeixinUser::insertGetId($user_data);      //保存用户信息
-                        //var_dump($id);
+                        var_dump($id);
                     }
                 }elseif($event=='CLICK'){     //点击
                     if ($xml->EventKey == 'kefu01') {
