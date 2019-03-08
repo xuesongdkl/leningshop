@@ -409,7 +409,7 @@ class WeixinController extends Controller
         $data=[
             'button'=>[
                 [
-                    'name'=>'我',
+                    'name'=>'你好',
                     'sub_button'=>[
                         [
                             "type"  => "click",      // click类型
@@ -419,7 +419,7 @@ class WeixinController extends Controller
                     ]
                 ],
                 [
-                    'name'=>'恨',
+                    'name'=>'奋斗',
                     'sub_button'=>[
                         [
                             'type'=>"view",
@@ -434,7 +434,7 @@ class WeixinController extends Controller
                     ]
                 ],
                 [
-                    'name'=>'你',
+                    'name'=>'好哦',
                     'sub_button'=>
                     [
                         [
