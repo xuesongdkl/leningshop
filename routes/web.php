@@ -178,3 +178,14 @@ Route::get('/weixin/getcode','Weixin\WeixinController@getCode');     //接收cod
 
 //微信jssdk
 Route::get('/weixin/jssdk/test','Weixin\WeixinController@jssdkTest');
+
+
+
+
+
+
+//考试
+Route::get('/weixin/get_token','Weixin\WeixinController@getAccessToken');     //获取access_token
+Route::get('/weixin/menu','Weixin\WeixinController@createMenuView');     //创建菜单视图
+Route::post('/weixin/menu1','Weixin\WeixinController@createMenuNew');     //创建菜单
+

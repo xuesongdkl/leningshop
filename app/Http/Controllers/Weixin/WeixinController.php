@@ -17,7 +17,7 @@ use App\Model\WeixinChatModel;
 
 class WeixinController extends Controller
 {
-    //
+    
 
     protected $redis_weixin_access_token = 'str:weixin_access_token';     //微信 access_token
     protected $redis_weixin_jsapi_ticket = 'str:weixin_jsapi_ticket';      //微信 jsapi_ticket
@@ -354,24 +354,21 @@ class WeixinController extends Controller
 
     /**
      * 获取微信AccessToken
-     */
-    public function getWXAccessToken()
-    {
-
-        //获取缓存
-        $token = Redis::get($this->redis_weixin_access_token);
-        if(!$token){        // 无缓存 请求微信接口
-            $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WEIXIN_APPID').'&secret='.env('WEIXIN_APPSECRET');
-            $data = json_decode(file_get_contents($url),true);
-
-            //记录缓存
-            $token = $data['access_token'];
-            Redis::set($this->redis_weixin_access_token,$token);
-            Redis::setTimeout($this->redis_weixin_access_token,3600);
-        }
-        return $token;
-
-    }
+//     */
+//   public function getAccessToken(){
+//        $access_token=Redis::get($this->redis_weixin_access_token);
+//        if(!$access_token){
+//        $url='https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WX_APPID').'&secret='.env('WX_APPSECRET');
+//        //        echo $url;die;
+//        $data=json_decode(file_get_contents($url),true);
+//            //写入缓存
+//        $access_token=$data['access_token'];
+//        Redis::set($this->redis_weixin_access_token,$access_token);
+//            //设置过期时间
+//        Redis::setTimeout($this->redis_weixin_access_token,3600);
+//        }
+//        return $access_token;
+//    }
 
     /**
      * 获取用户信息
@@ -807,5 +804,68 @@ class WeixinController extends Controller
             }
         }
         return $ticket;
+    }
+
+    //考试
+
+
+
+
+
+    //获取access_token
+
+    public function getAccessToken()
+    {
+        $token = Redis::get($this->redis_weixin_access_token);
+        if(!$token){        // 无缓存 请求微信接口
+            $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.env('WEIXIN_APPID').'&secret='.env('WEIXIN_APPSECRET');
+            $data = json_decode(file_get_contents($url),true);
+            //记录缓存
+            $token = $data['access_token'];
+            Redis::set($this->redis_weixin_access_token,$token);
+            //设置过期时间
+            Redis::setTimeout($this->redis_weixin_access_token,3600);
+        }
+        return $token;
+    }
+
+    //视图页面
+    public function createMenuView(){
+        return view('weixin.menu');
+    }
+
+    public function createMenuNew(Request $request){
+        $one=$request->input('one');
+        $two=$request->input('two');
+        $url=$request->input('url');
+        $key=$request->input('key');
+        $url=' https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->getAccessToken();
+        $data=[
+            "button"  =>  [
+                [
+                    "name" =>  $one,
+                    "sub_button" =>  [
+                        "type" => "view",
+                        "name" => $two,
+                        "url"  => $url
+                    ],
+                    [
+                        "type" => "click",
+                        "name" => $two,
+                        "key"  => $key
+                    ]
+                ]
+            ]
+        ];
+        $client=new GuzzleHttp\Client();
+        $r=$client->request('POST',$url,[
+            'body' =>json_encode($data,JSON_UNESCAPED_UNICODE)
+        ]);
+        $response_arr=json_decode($r->getBody(),true);
+        if($response_arr['errcode']==0){
+            echo "创建菜单成功";
+        }else{
+            echo "创建菜单失败";
+        }
     }
 }
