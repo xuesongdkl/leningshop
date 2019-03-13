@@ -18,7 +18,7 @@ use App\Model\WeixinChatModel;
 class WeixinController extends Controller
 {
 
-//////
+
     protected $redis_weixin_access_token = 'str:weixin_access_token';     //微信 access_token
     protected $redis_weixin_jsapi_ticket = 'str:weixin_jsapi_ticket';      //微信 jsapi_ticket
 
