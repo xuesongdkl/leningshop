@@ -189,3 +189,11 @@ Route::get('/weixin/get_token','Weixin\WeixinController@getAccessToken');     //
 Route::get('/weixin/menu','Weixin\WeixinController@createMenuView');     //创建菜单视图
 Route::post('/weixin/menu1','Weixin\WeixinController@createMenuNew');     //创建菜单
 
+
+
+
+
+//curl
+Route::any('/test/curl1','Test\TestController@curl1');     
+
+
