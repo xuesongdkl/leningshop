@@ -194,6 +194,9 @@ Route::post('/weixin/menu1','Weixin\WeixinController@createMenuNew');     //创�
 
 
 //curl
-Route::any('/test/curl1','Test\TestController@curl1');     
+Route::any('/test/curl1','Test\TestController@curl1');
 
-
+//CBC算法
+Route::post('/test/cbc','Test\TestController@int');
+//签名
+Route::post('/test/sign','Test\TestController@sign');
