@@ -168,4 +168,9 @@ class TestController extends Controller
 			print_r(json_decode($_POST['data'],true));
 		}
 	}
+
+	public function api(){
+		$data=$_POST;
+		return $data;
+	}
 }
