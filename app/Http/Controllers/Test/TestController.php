@@ -171,6 +171,6 @@ class TestController extends Controller
 
 	public function api(){
 		$data=$_POST;
-		return $data;
+		echo json_encode($data);
 	}
 }
