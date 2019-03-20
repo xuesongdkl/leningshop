@@ -74,11 +74,11 @@ class UserController extends Controller
 		$uid=UserModel::insertGetId($data);
 		if($uid){
 			setcookie('uid',$uid,time()+86400,'/','shop.lening.com',false,true);
-			header("refresh:2;url=/userlogin");
-			echo "注册成功,正在跳转";
+			//header("refresh:2;url=/userlogin");
+			echo "注册成功,正在跳转";die;
 		}else{
-			echo "注册失败";
-			header("refresh:2;url=/userreg");
+			echo "注册失败";die;
+			//header("refresh:2;url=/userreg");
 		}
 	}
 
@@ -100,13 +100,13 @@ class UserController extends Controller
 				setcookie('token',$token,time()+86400,'/','',false,true);
 				$request->session()->put('uid',$res->uid);
 				$request->session()->put('p_token',$token);
-				header('refresh:1;url=/cart');
-				echo "登录成功";
+				//header('refresh:1;url=/cart');
+				echo "登录成功";die;
 			}else{
-				echo "账号或者密码错误";
+				echo "账号或者密码错误";die;
 			}
 		}else{
-			echo "用户不存在";
+			echo "用户不存在";die;
 		}
 	}
 	public function center(Request $request){
