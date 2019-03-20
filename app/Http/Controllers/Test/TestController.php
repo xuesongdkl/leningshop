@@ -170,7 +170,14 @@ class TestController extends Controller
 	}
 
 	public function api(){
-		$data=$_POST;
-		echo json_encode($data);
+		$dat=$_POST;
+		$data=json_encode($dat);
+		if(!empty($data)){
+			$res=[
+				'errno'  =>  0,
+				'msg'    =>  $data
+			];
+		}
+		return $res;
 	}
 }
