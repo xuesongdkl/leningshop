@@ -170,7 +170,7 @@ class TestController extends Controller
 	}
 
 	public function api(){
-		$data='aaa';
+		$data=$_POST;
 		echo json_encode($data);
 	}
 }
