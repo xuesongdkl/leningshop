@@ -112,17 +112,12 @@ class TestController extends Controller
 	//CBC算法
 	public function int(){
 		$now=$_GET['t'];
-//		echo $now;
-//		$data=$_POST['data'];
-//		echo $data;
 		$key='love';
 		$salt='sssss';
 		$method='AES-128-CBC';
 		$iv=substr(md5($now.$salt),5,16);
 		$json_str=base64_decode($_POST['data']);
-//		echo $json_str;
 		$dec_data=openssl_decrypt($json_str,$method,$key,OPENSSL_RAW_DATA,$iv);
-//		echo $dec_data;
 		if(!empty($dec_data)){
 			$time=time();
 			$response=[
@@ -141,9 +136,6 @@ class TestController extends Controller
 	}
 
 	//签名
-
-
-	public $pri_key='./key/rsa_private_key.pem';
 	public function sign(){
 		$data=[
 				'name'=>'杜凯龙',
@@ -152,7 +144,7 @@ class TestController extends Controller
 		];
 		$json_data=json_encode($data);
 
-		$priKey = file_get_contents($this->pri_key);
+		$priKey = file_get_contents('./key/rsa_private_key.pem');
 		$res = openssl_get_privatekey($priKey);
 
 		($res) or die('您使用的私钥格式错误，请检查RSA私钥配置');
@@ -163,7 +155,17 @@ class TestController extends Controller
 			'data'  =>  $data,
 			'sign'  =>  $base_sign
 	 	];
-
 		echo json_encode($info);
+	}
+
+	public function sign1(){
+		$sign=base64_decode($_POST['sign']);
+		//验签
+		$pub_key=openssl_get_publickey(file_get_contents('./key/rsa_public_key.pem'));
+		$rs=openssl_verify($_POST['data'],$sign,$pub_key,OPENSSL_ALGO_SHA256);
+		if($rs){
+			echo '验签成功';echo '<br>';
+			print_r(json_decode($_POST['data'],true));
+		}
 	}
 }

@@ -200,3 +200,7 @@ Route::any('/test/curl1','Test\TestController@curl1');
 Route::post('/test/cbc','Test\TestController@int');
 //签名
 Route::post('/test/sign','Test\TestController@sign');
+
+Route::post('/test/sign1','Test\TestController@sign1');
+
+
