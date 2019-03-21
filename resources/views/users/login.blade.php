@@ -23,6 +23,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" value="{{$redirect}}" name="redirect">
                 <button type="submit" class="btn btn-info">登 录</button>
             </div>
         </div>

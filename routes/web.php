@@ -11,11 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    echo "<h2 style='color: red;' >欢迎小雪松来到前台首页</h2>";
+//Route::get('/', function () {
+////    echo "<h2 style='color: red;' >欢迎小雪松来到前台首页</h2>";
+////    $current_url='http://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+////    $data=[
+////        'login'   =>  $request->get('is_login'),
+////        'current_url'  =>  $current_url
+////    ];
+////    return view('welcome',$data);
 //    return view('welcome');
-});
+//});
 
+Route::get('/','Home\IndexController@index')->middleware('check.login.token');
 Route::get('/adduser','User\UserController@add');
 
 //路由跳转
