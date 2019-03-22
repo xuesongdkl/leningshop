@@ -84,11 +84,7 @@ class UserController extends Controller
 
 	//登录
 	public function login(){
-		$url=$_GET['redirect'];
-		$data=[
-			'redirect'  =>  $url
-		];
-		return view('users.login',$data);
+		return view('users.login');
 	}
 
 	public function dologin(Request $request){
@@ -105,7 +101,7 @@ class UserController extends Controller
 				setcookie('token',$token,time()+86400,'/','',false,true);
 				$request->session()->put('uid',$res->uid);
 				$request->session()->put('p_token',$token);
-				header('refresh:1;url="$url"');
+//				header('refresh:1;url="$url"');
 				echo "登录成功";die;
 			}else{
 				echo "账号或者密码错误";die;

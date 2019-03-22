@@ -66,18 +66,15 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
                 <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                    @if($login==1)
+                        <a href="http://vm.passport.vm.lening.com/userlogin?redirect={{$current_url}}">Login</a>
+                        <a href="http://vm.passport.vm.lening.com/userreg">Register</a>
                     @else
-                        <a href="http://vm.passport.com/userlogin?redirect={{$current_url}}">Login</a>
-                        <a href="http://vm.passport.com/userreg">Register</a>
-                        {{--<a href="http://vm.passport.com/userlogin">登录</a>--}}
-                        {{--<a href="http://vm.passport.com/userreg">注册</a>--}}
-                    @endauth
+                        <a href="http://vm.passport.vm.lening.com/quit">Quit</a>
+                    @endif
                 </div>
-            @endif
+
 
             <div class="content">
                 <div class="title m-b-md">

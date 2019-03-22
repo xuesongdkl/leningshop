@@ -73,8 +73,8 @@
                     @else
                         <a href="http://vm.passport.com/userlogin">Login</a>
                         <a href="http://vm.passport.com/userreg">Register</a>
-                        {{--<a href="http://vm.passport.com/userlogin">登录</a>--}}
-                        {{--<a href="http://vm.passport.com/userreg">注册</a>--}}
+                        <a href="http://vm.passport.com/userlogin">登录</a>
+                        <a href="http://vm.passport.com/userreg">注册</a>
                     @endauth
                 </div>
             @endif

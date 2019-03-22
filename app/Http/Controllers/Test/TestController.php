@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Test;
 
 use App\Model\UserModel;
-use Illuminate\Database\Eloquent\Model;use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use DB;
