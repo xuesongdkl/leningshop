@@ -20,6 +20,6 @@ class VerifyCsrfToken extends Middleware
         '/weixin/pay/notice',
         '/test/curl1',
         '/test/cbc',
-        '/userlogin',
+        '/usera',
     ];
 }

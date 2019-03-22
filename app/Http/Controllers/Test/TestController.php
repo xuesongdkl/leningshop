@@ -183,9 +183,8 @@ class TestController extends Controller
 
 	//登录
 	public function dologin(){
-//        echo 3333;die;
 		$u_name=$_POST['u_name'];
-		echo $u_name;die;
+//		echo $u_name;die;
 		$u_pwd=$_POST['u_pwd'];
 		$data=[
 				'u_name' =>$u_name,
@@ -199,6 +198,7 @@ class TestController extends Controller
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);              //设置获取的信息以文件流的形式返回，而不是直接输出
 		curl_setopt($curl, CURLOPT_HEADER, 0);                      //设置头文件的信息作为数据流输出
 		$rs = curl_exec($curl);
-		var_dump($rs);
+		$response=json_decode($rs,true);
+		return $response;
 	}
 }
