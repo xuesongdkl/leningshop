@@ -70,8 +70,8 @@
                     @if($login==1)
                         <a href="http://vm.passport.vm.lening.com/quit">Quit</a>
                     @else
-                        <a href="http://vm.passport.vm.lening.com/userlogin?redirect={{$current_url}}">Login</a>
-                        <a href="http://vm.passport.vm.lening.com/userreg">Register</a>
+                        <a href="http://xpassport.52xiuge.com/userlogin?redirect={{$current_url}}">Login</a>
+                        <a href="http://xpassport.52xiuge.com/userreg">Register</a>
                     @endif
                 </div>
 
