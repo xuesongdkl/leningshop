@@ -212,3 +212,8 @@ Route::post('/test/sign1','Test\TestController@sign1');
 
 Route::post('/test/api','Test\TestController@api');
 
+
+
+//登录授权
+$router->post('/userlogin','User\IndexController@dologin');
+
