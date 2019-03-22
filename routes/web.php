@@ -213,6 +213,6 @@ Route::post('/test/sign1','Test\TestController@sign1');
 Route::post('/test/api','Test\TestController@api');
 
 
-//登录授权
+//web登录授权
 Route::post('/usera','Test\TestController@dologin');
 
