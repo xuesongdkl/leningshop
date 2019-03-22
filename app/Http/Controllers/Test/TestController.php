@@ -190,6 +190,7 @@ class TestController extends Controller
 				'u_name' =>$u_name,
 				'u_pwd'  =>$u_pwd
 		];
+//		var_dump($data);die;
 		$url='http://xpassport.52xiuge.com/user/login';
 		$curl = curl_init();                                        //初始化
 		curl_setopt($curl, CURLOPT_URL,$url);                       //设置抓取的url
@@ -198,6 +199,7 @@ class TestController extends Controller
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);              //设置获取的信息以文件流的形式返回，而不是直接输出
 		curl_setopt($curl, CURLOPT_HEADER, 0);                      //设置头文件的信息作为数据流输出
 		$rs = curl_exec($curl);
+//		var_dump($rs);die;
 		$response=json_decode($rs,true);
 		return $response;
 	}
