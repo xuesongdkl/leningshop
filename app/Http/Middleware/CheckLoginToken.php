@@ -15,8 +15,9 @@ class CheckLoginToken
      * @return mixed
      */
     public function handle($request,Closure $next){
+        echo 111;
         if(isset($_COOKIE['uid'])&& isset($_COOKIE['token'])){
-            $key ='str:u:token:web:'.$_COOKIE['uid'];
+            $key ='str:u:token:'.$_COOKIE['uid'];
             $token =redis::hget($key);
             var_dump($token) ;
             var_dump($_COOKIE['token']);die;
