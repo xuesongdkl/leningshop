@@ -69,9 +69,12 @@
             <div class="top-right links">
                 @if($login==1)
                     <a href="http://xpassport.52self.cn/quit">Quit</a>
+                    {{--<a href="http://vm.passport.vm.lening.com/quit">Quit</a>--}}
                 @else
                     <a href="http://xpassport.52self.cn/userlogin?redirect={{$current_url}}">Login</a>
                     <a href="http://xpassport.52self.cn/userreg">Register</a>
+                    {{--<a href="http://vm.passport.vm.lening.com/userlogin?redirect={{$current_url}}">Login</a>--}}
+                    {{--<a href="http://vm.passport.vm.lening.com/userreg">Register</a>--}}
                 @endif
             </div>
 
