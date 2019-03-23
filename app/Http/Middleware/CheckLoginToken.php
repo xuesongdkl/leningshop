@@ -18,9 +18,6 @@ class CheckLoginToken
         if(isset($_COOKIE['uid'])&& isset($_COOKIE['token'])){
             $key ='str:u:token:'.$_COOKIE['uid'];
             $token =redis::hget($key,'web');
-//            $token=redis::get($key);
-//            var_dump($token) ;
-//            var_dump($_COOKIE['token']);
             if($_COOKIE['token']==$token){
                 $request->attributes->add(['is_login'=>1]);
             }else{
