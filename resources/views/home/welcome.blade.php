@@ -68,7 +68,7 @@
         <div class="flex-center position-ref full-height">
             <div class="top-right links">
                 @if($login==1)
-                    <a href="http://">Quit</a>
+                    <a href="http://xpassport.52self.cn/quit">Quit</a>
                 @else
                     <a href="http://xpassport.52self.cn/userlogin?redirect={{$current_url}}">Login</a>
                     <a href="http://xpassport.52self.cn/userreg">Register</a>
