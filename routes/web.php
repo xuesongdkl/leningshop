@@ -23,6 +23,9 @@
 //});
 
 Route::get('/','Home\IndexController@index')->middleware('check.login.token');
+
+Route::post('/acenter','User\UserController@acenter');        //app个人中心
+
 Route::get('/adduser','User\UserController@add');
 
 //路由跳转
