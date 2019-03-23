@@ -192,7 +192,7 @@ class TestController extends Controller
 				'u_pwd'  =>$u_pwd
 		];
 //		var_dump($data);die;
-		$url='http://xpassport.52xiuge.com/user/login';
+		$url='http://xpassport.52self.cn/user/login';
 		$curl = curl_init();                                        //初始化
 		curl_setopt($curl, CURLOPT_URL,$url);                       //设置抓取的url
 		curl_setopt($curl, CURLOPT_POST, 1);                        //设置post方式提交

@@ -66,14 +66,14 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-                <div class="top-right links">
-                    @if($login==1)
-                        <a href="http://vm.passport.vm.lening.com/quit">Quit</a>
-                    @else
-                        <a href="http://xpassport.52xiuge.com/userlogin?redirect={{$current_url}}">Login</a>
-                        <a href="http://xpassport.52xiuge.com/userreg">Register</a>
-                    @endif
-                </div>
+            <div class="top-right links">
+                @if($login==1)
+                    <a href="http://">Quit</a>
+                @else
+                    <a href="http://xpassport.52self.cn/userlogin?redirect={{$current_url}}">Login</a>
+                    <a href="http://xpassport.52self.cn/userreg">Register</a>
+                @endif
+            </div>
 
 
             <div class="content">
