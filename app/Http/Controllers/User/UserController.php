@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use App\Model\UserModel;
+use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -153,25 +154,25 @@ class UserController extends Controller
 		$uid=$request->input('uid');
 		$token=$request->input('token');
 		if(empty($uid)||empty($token)){
-			$reponse=[
+			$response=[
 				'errno'  =>   40003,
 				'msg'    =>    '请先登录'
 			];
 		}else{
 			$key='str:u:token:'.$uid;
-			$r_token=Redis::hGet(key,'app');
+			$r_token=Redis::hGet($key,'app');
 			if($r_token==$token){
-				$reponse=[
+				$response=[
 					'errno'  =>  0,
 					'msg'    =>  'ok'
 				];
 			}else{
-				$reponse=[
+				$response=[
 					'errno'   =>   40001,
 					'msg'     =>   '请重新登录'
 				];
 			}
 		}
-		return $reponse;
+		return $response;
 	}
 }
