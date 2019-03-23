@@ -145,4 +145,33 @@ class UserController extends Controller
 		echo "请重新登录,正在跳转";
 		header('Refresh:1;url=/userlogin');
 	}
+
+
+
+	//api个人中心
+	public function acenter(Request $request){
+		$uid=$request->input('uid');
+		$token=$request->input('token');
+		if(empty($uid)||empty($token)){
+			$reponse=[
+				'errno'  =>   40003,
+				'msg'    =>    '请先登录'
+			];
+		}else{
+			$key='str:u:token:'.$uid;
+			$r_token=Redis::hGet(key,'app');
+			if($r_token==$token){
+				$reponse=[
+					'errno'  =>  0,
+					'msg'    =>  'ok'
+				];
+			}else{
+				$reponse=[
+					'errno'   =>   40001,
+					'msg'     =>   '请重新登录'
+				];
+			}
+		}
+		return $reponse;
+	}
 }
