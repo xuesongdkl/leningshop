@@ -219,5 +219,7 @@ Route::post('/test/api','Test\TestController@api');
 //web登录授权
 Route::post('/usera','Test\TestController@dologin');
 
+Route::post('/registera','Test\TestController@doregister');
+
 Route::post('/acenter','User\UserController@acenter');        //app个人中心
 

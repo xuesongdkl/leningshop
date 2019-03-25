@@ -22,5 +22,7 @@ class VerifyCsrfToken extends Middleware
         '/test/cbc',
         '/usera',
         '/acenter',
+        'registera',
+
     ];
 }

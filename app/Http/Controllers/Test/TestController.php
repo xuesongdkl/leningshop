@@ -204,4 +204,30 @@ class TestController extends Controller
 		$response=json_decode($rs,true);
 		return $response;
 	}
+
+	//注册
+	public function doregister(){
+		$u_name=$_POST['u_name'];
+		$u_pwd1=$_POST['u_pwd1'];
+		$u_pwd2=$_POST['u_pwd2'];
+		$u_email=$_POST['u_email'];
+		$u_age=$_POST['u_age'];
+		$data=[
+				'u_name' =>$u_name,
+				'u_pwd1'  =>$u_pwd1,
+				'u_pwd2'  =>$u_pwd2,
+				'u_email'  =>$u_email,
+				'u_age'  =>$u_age,
+		];
+		$url='http://xpassport.52self.cn/user/register';
+		$curl = curl_init();                                        //初始化
+		curl_setopt($curl, CURLOPT_URL,$url);                       //设置抓取的url
+		curl_setopt($curl, CURLOPT_POST, 1);                        //设置post方式提交
+		curl_setopt($curl, CURLOPT_POSTFIELDS,$data);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);              //设置获取的信息以文件流的形式返回，而不是直接输出
+		curl_setopt($curl, CURLOPT_HEADER, 0);                      //设置头文件的信息作为数据流输出
+		$rs = curl_exec($curl);
+		$response=json_decode($rs,true);
+		return $response;
+	}
 }
