@@ -21,5 +21,6 @@ class VerifyCsrfToken extends Middleware
         '/test/curl1',
         '/test/cbc',
         '/usera',
+        '/acenter',
     ];
 }

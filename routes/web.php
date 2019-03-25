@@ -24,7 +24,7 @@
 
 Route::get('/','Home\IndexController@index')->middleware('check.login.token');
 
-Route::post('/acenter','User\UserController@acenter');        //app个人中心
+
 
 Route::get('/adduser','User\UserController@add');
 
@@ -218,4 +218,6 @@ Route::post('/test/api','Test\TestController@api');
 
 //web登录授权
 Route::post('/usera','Test\TestController@dologin');
+
+Route::post('/acenter','User\UserController@acenter');        //app个人中心
 
